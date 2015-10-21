@@ -25,12 +25,12 @@ int main(int argc, char** argv){
 	height = help_strtol(argv[2]);
 
 
-	errno = posix_memalign((void **) &old_grid, 64, width*height);
+	errno = posix_memalign((void **) &old_grid, 64, sizeof(GRID_T)*width*height);
 	if(errno){
 		perror("posix_memalign");
 	}
 
-	errno = posix_memalign((void **) &new_grid, 64, width*height);
+	errno = posix_memalign((void **) &new_grid, 64, sizeof(GRID_T)*width*height);
 	if(errno){
 		perror("posix_memalign");
 	}
