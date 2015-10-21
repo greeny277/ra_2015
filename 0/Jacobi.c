@@ -47,7 +47,21 @@ int main(int argc, char** argv){
 
 /* Method for initialization of a grid */
 static void init(GRID_T *grid){
-	// TODO
+	for(int i = 0; i < height; i++){
+		for(int j = 0; j < width; j++){
+			if(i == 0){
+				/* Init first row */
+				grid[j] = 1.0f;
+				continue;
+			} else if(j == 0){
+				/* Init first entry of each column */
+				grid[i] = 1.0f;
+				continue;
+			} else {
+				grid[width*i + j] = 0.0f;
+			}
+		}
+	}
 	return;
 }
 
