@@ -1,5 +1,5 @@
 CC     = gcc
-CFLAGS = -std=c99 -Wall
+CFLAGS = -std=c99 -Wall -D_XOPEN_SOURCE=700 -g
 RM     = rm -f
 
 # If any of the files in the following list does not exist, the corresponding .o
