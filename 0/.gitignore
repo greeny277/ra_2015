@@ -1,3 +1,4 @@
 *.o
 Jacobi
 .*.swp
+*.ppm
