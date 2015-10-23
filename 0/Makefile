@@ -21,5 +21,5 @@ Jacobi: $(OBJS)
 .c.o:
 	$(CC) -c $(CFLAGS) $<
 
-Jacobi.o:        Jacobi.c
-JacobiVanilla.o: JacobiVanilla.c
+Jacobi.o:        Jacobi.c Jacobi.h
+JacobiVanilla.o: JacobiVanilla.c Jacobi.h JacobiVanilla.h

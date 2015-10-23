@@ -3,11 +3,8 @@
 #include <errno.h>
 #include <limits.h>
 
-
-#define GRID_T float
-
-/* Variables */
-static GRID_T *old_grid, *new_grid;
+#include "Jacobi.h"
+#include "JacobiVanilla.h"
 
 /* Method declarations */
 static void init(GRID_T *, int, int);
@@ -25,6 +22,8 @@ int main(int argc, char** argv){
 	width  = help_strtol(argv[1]);
 	height = help_strtol(argv[2]);
 
+	/* Variables */
+	GRID_T *old_grid, *new_grid;
 
 	errno = posix_memalign((void **) &old_grid, 64, sizeof(GRID_T)*width*height);
 	if(errno){
@@ -36,12 +35,23 @@ int main(int argc, char** argv){
 		perror("posix_memalign");
 	}
 
+
 	/* Initialize grids left and upper border with 1.0
 	 * and the rest with 0.0 */
 	init(old_grid, width, height);
 	init(new_grid, width, height);
 
+	printf("Print init grids\n");
+	printf("New Grid:\n");
 	prettyPrint(new_grid, width, height);
+	printf("Old Grid:\n");
+	prettyPrint(old_grid, width, height);
+
+	jacobiVanilla(old_grid, new_grid, width, height);
+
+	printf("New Grid after 1 Iteration:\n");
+	prettyPrint(new_grid, width, height);
+	printf("Old Grid after 1 Iteration:\n");
 	prettyPrint(old_grid, width, height);
 
 	free(old_grid);
@@ -102,5 +112,6 @@ static void prettyPrint(GRID_T *grid, int width, int height){
 		printf("\n");
 	}
 	printf("------END GRID----------\n");
+	printf("\n");
 	return;
 }
