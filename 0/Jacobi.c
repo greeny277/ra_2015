@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <limits.h>
+#include <time.h>
 
 #include "Jacobi.h"
 #include "JacobiVanilla.h"
@@ -10,6 +11,8 @@
 static void init(GRID_T *, int, int);
 static long help_strtol(char *);
 static void prettyPrint(GRID_T *, int, int);
+static double getTime(struct timespec *);
+static void loop(GRID_T *, GRID_T *, int , int );
 
 int main(int argc, char** argv){
 
@@ -23,42 +26,70 @@ int main(int argc, char** argv){
 	height = help_strtol(argv[2]);
 
 	/* Variables */
-	GRID_T *old_grid, *new_grid;
+	GRID_T *oldGrid, *newGrid;
 
-	errno = posix_memalign((void **) &old_grid, 64, sizeof(GRID_T)*width*height);
+	/* Allocate memory with posix_memalign */
+	errno = posix_memalign((void **) &oldGrid, 64, sizeof(GRID_T)*width*height);
 	if(errno){
 		perror("posix_memalign");
 	}
 
-	errno = posix_memalign((void **) &new_grid, 64, sizeof(GRID_T)*width*height);
+	errno = posix_memalign((void **) &newGrid, 64, sizeof(GRID_T)*width*height);
 	if(errno){
 		perror("posix_memalign");
 	}
-
 
 	/* Initialize grids left and upper border with 1.0
 	 * and the rest with 0.0 */
-	init(old_grid, width, height);
-	init(new_grid, width, height);
+	init(oldGrid, width, height);
+	init(newGrid, width, height);
 
 	printf("Print init grids\n");
 	printf("New Grid:\n");
-	prettyPrint(new_grid, width, height);
+	prettyPrint(newGrid, width, height);
 	printf("Old Grid:\n");
-	prettyPrint(old_grid, width, height);
+	prettyPrint(oldGrid, width, height);
 
-	jacobiVanilla(old_grid, new_grid, width, height);
+	loop(oldGrid, newGrid, width, height);
 
-	printf("New Grid after 1 Iteration:\n");
-	prettyPrint(new_grid, width, height);
+	prettyPrint(newGrid, width, height);
 	printf("Old Grid after 1 Iteration:\n");
-	prettyPrint(old_grid, width, height);
+	prettyPrint(oldGrid, width, height);
 
-	free(old_grid);
-	free(new_grid);
+	free(oldGrid);
+	free(newGrid);
 	return 0;
 }
 
+/*
+ * Call jacobiVanilla() in a loop until LOOP_TIME
+ * passed
+ */
+static void loop(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
+	struct timespec start;
+	struct timespec end;
+	double diff_sec = 0;
+	double startTime = getTime(&start);
+	if(startTime == -1){
+		exit(EXIT_FAILURE);
+	}
+
+	while(diff_sec < LOOP_TIME){
+		oldGrid = newGrid;
+		jacobiVanilla(oldGrid, newGrid, width, height);
+
+		double endTime = getTime(&end);
+		if(startTime == -1){
+			exit(EXIT_FAILURE);
+		}
+
+		diff_sec = endTime - startTime;
+
+		//printf("end:%ld\n", endT);
+		//printf("diff:%ld\n", diff);
+	}
+	return;
+}
 /* Method for initialization of a grid */
 static void init(GRID_T *grid, int width, int height){
 	for(int i = 0; i < height; i++){
@@ -114,4 +145,16 @@ static void prettyPrint(GRID_T *grid, int width, int height){
 	printf("------END GRID----------\n");
 	printf("\n");
 	return;
+}
+
+/*
+ * Returns realtime in seconds. If an error occurs
+ * -1 instead.
+ */
+static double getTime(struct timespec *tp){
+	if(clock_gettime(CLOCK_MONOTONIC, tp)){
+		perror("clock_gettime");
+		return -1;
+	}
+	return (double)tp->tv_sec + (double)tp->tv_nsec / 1000000000.0;
 }
