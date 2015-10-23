@@ -11,7 +11,7 @@
 /* Method declarations */
 static void init(GRID_T *, int, int);
 static long help_strtol(char *);
-static void prettyPrint(GRID_T *, int, int);
+//static void prettyPrint(GRID_T *, int, int);
 static int pretty_PPM_Print(GRID_T *, int, int, char *);
 static double getTime(struct timespec *);
 static int loop(GRID_T *, GRID_T *, int , int);
@@ -56,8 +56,8 @@ int main(int argc, char** argv){
 	printf("------------------\n");
 	printf("LUPS: %d\n", lups);
 
-	printf("Final grid:\n");
-	prettyPrint(newGrid, width, height);
+	//printf("Final grid:\n");
+	//prettyPrint(newGrid, width, height);
 
 	pretty_PPM_Print(newGrid, width, height, "testfile");
 
@@ -146,21 +146,8 @@ static long help_strtol(char *string){
 	return val;
 }
 
-/* Print Grid in asci art*/
-static void prettyPrint(GRID_T *grid, int width, int height){
-	printf("------BEGIN GRID--------\n");
-	for(int i = 0; i < height; i++){
-		for(int j = 0; j < width; j++){
-			printf("%f  ", grid[width*i + j]);
-		}
-		printf("\n");
-	}
-	printf("------END GRID----------\n");
-	printf("\n");
-	return;
-}
 
-/* Creates _filename_ with ppm ending
+/* Writes a ppm file for the grid in _filename_
  * @return 0 on success
  *        -1 if an error occured
  */
@@ -169,8 +156,6 @@ static int pretty_PPM_Print(GRID_T *grid, int width, int height, char *filename)
 	char completeFilename[strlen(filename) + 4 + 1];
 	snprintf(completeFilename, strlen(filename)+5, "%s.ppm", filename);
 	/* Opens file */
-	printf("filename: %s\n", filename);
-	printf("filename: %s\n", completeFilename);
 	FILE *f = fopen(completeFilename, "w+");
 	if(f == NULL){
 		perror("fopen");
@@ -234,3 +219,18 @@ static void copy_grid(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 		}
 	}
 }
+
+/* Print Grid in asci art for debugging
+static void prettyPrint(GRID_T *grid, int width, int height){
+	printf("------BEGIN GRID--------\n");
+	for(int i = 0; i < height; i++){
+		for(int j = 0; j < width; j++){
+			printf("%f  ", grid[width*i + j]);
+		}
+		printf("\n");
+	}
+	printf("------END GRID----------\n");
+	printf("\n");
+	return;
+}
+*/
