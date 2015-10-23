@@ -195,7 +195,7 @@ static void gridEntryMap(FILE *f, GRID_T entry){
 		green = -(255/0.25)*(entry - 1);
 		blue = 255;
 	}
-	fprintf(f, "%d %d %d ", red, green, blue);
+	fprintf(f, " %d %d %d", red, green, blue);
 }
 /*
  * Returns realtime in seconds. If an error occurs
