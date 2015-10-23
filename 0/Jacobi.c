@@ -8,11 +8,11 @@
 
 /* Variables */
 static GRID_T *old_grid, *new_grid;
-static int width, height;
 
 /* Method declarations */
-static void init(GRID_T *);
+static void init(GRID_T *, int, int);
 static long help_strtol(char *);
+static void prettyPrint(GRID_T *, int, int);
 
 int main(int argc, char** argv){
 
@@ -21,6 +21,7 @@ int main(int argc, char** argv){
 		exit(EXIT_FAILURE);
 	}
 
+	int width, height;
 	width  = help_strtol(argv[1]);
 	height = help_strtol(argv[2]);
 
@@ -37,8 +38,11 @@ int main(int argc, char** argv){
 
 	/* Initialize grids left and upper border with 1.0
 	 * and the rest with 0.0 */
-	init(old_grid);
-	init(new_grid);
+	init(old_grid, width, height);
+	init(new_grid, width, height);
+
+	prettyPrint(new_grid, width, height);
+	prettyPrint(old_grid, width, height);
 
 	free(old_grid);
 	free(new_grid);
@@ -46,7 +50,7 @@ int main(int argc, char** argv){
 }
 
 /* Method for initialization of a grid */
-static void init(GRID_T *grid){
+static void init(GRID_T *grid, int width, int height){
 	for(int i = 0; i < height; i++){
 		for(int j = 0; j < width; j++){
 			if(i == 0){
@@ -55,7 +59,7 @@ static void init(GRID_T *grid){
 				continue;
 			} else if(j == 0){
 				/* Init first entry of each column */
-				grid[i] = 1.0f;
+				grid[width*i] = 1.0f;
 				continue;
 			} else {
 				grid[width*i + j] = 0.0f;
@@ -86,4 +90,17 @@ static long help_strtol(char *string){
 	}
 
 	return val;
+}
+
+/* Print Grid in asci art*/
+static void prettyPrint(GRID_T *grid, int width, int height){
+	printf("------BEGIN GRID--------\n");
+	for(int i = 0; i < height; i++){
+		for(int j = 0; j < width; j++){
+			printf("%f  ", grid[width*i + j]);
+		}
+		printf("\n");
+	}
+	printf("------END GRID----------\n");
+	return;
 }
