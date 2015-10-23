@@ -1,11 +1,10 @@
 /**
- * @brief  Computes one Jacobi Iteration
+ * @brief  Computes one Jacobi Iteration. The borders will not be changed.
  *
- * @param oldGrid  Old grid which owns entries
- * for computation
+ * @param oldGrid  owns entries of former computation. Read only.
  *
- * @param newGrid  Results of computation are stored in newGrid
+ * @param newGrid  stores results of computation based on oldGrid.
  *
- * @return Nothing
+ * @return No return value
  * */
 void jacobiVanilla(GRID_T *oldGrid, GRID_T *newGrid, int, int);
