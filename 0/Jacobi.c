@@ -21,7 +21,7 @@ static void gridEntryMap(FILE *, GRID_T);
 int main(int argc, char** argv){
 
 	if(argc < 3){
-		fprintf(stderr, "Too less arguments: Jacobi [width] [height]\n");
+		fprintf(stderr, "Too less arguments: Jacobi width height [outfile]\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -55,11 +55,12 @@ int main(int argc, char** argv){
 
 	printf("------------------\n");
 	printf("LUPS: %d\n", lups);
-
-	//printf("Final grid:\n");
-	//prettyPrint(newGrid, width, height);
-
-	pretty_PPM_Print(newGrid, width, height, "testfile");
+	
+	if(argc >= 4){
+		pretty_PPM_Print(newGrid, width, height, argv[3]);
+	} else {
+		pretty_PPM_Print(newGrid, width, height, "out");
+	}
 
 	free(oldGrid);
 	free(newGrid);
