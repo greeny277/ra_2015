@@ -12,7 +12,7 @@ static void init(GRID_T *, int, int);
 static long help_strtol(char *);
 static void prettyPrint(GRID_T *, int, int);
 static double getTime(struct timespec *);
-static void loop(GRID_T *, GRID_T *, int , int );
+static int loop(GRID_T *, GRID_T *, int , int );
 static void copy_grid(GRID_T *, GRID_T *, int , int );
 
 int main(int argc, char** argv){
@@ -45,15 +45,14 @@ int main(int argc, char** argv){
 	init(oldGrid, width, height);
 	init(newGrid, width, height);
 
-	printf("Print init grids\n");
-	printf("New Grid:\n");
-	prettyPrint(newGrid, width, height);
-	printf("Old Grid:\n");
-	prettyPrint(oldGrid, width, height);
+	int lups = loop(oldGrid, newGrid, width, height);
 
-	loop(oldGrid, newGrid, width, height);
+	printf("------------------\n");
+	printf("LUPS: %d\n", lups);
 
+	printf("Final grid:\n");
 	prettyPrint(newGrid, width, height);
+
 
 	free(oldGrid);
 	free(newGrid);
@@ -64,7 +63,7 @@ int main(int argc, char** argv){
  * Call jacobiVanilla() in a loop until LOOP_TIME
  * passed
  */
-static void loop(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
+static int loop(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 	struct timespec start;
 	struct timespec end;
 	double diff_sec = 0;
@@ -73,6 +72,7 @@ static void loop(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 		exit(EXIT_FAILURE);
 	}
 
+	int lups = 0;
 	while(diff_sec < LOOP_TIME){
 		jacobiVanilla(oldGrid, newGrid, width, height);
 
@@ -85,10 +85,9 @@ static void loop(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 
 		diff_sec = endTime - startTime;
 
-		//printf("end:%ld\n", endT);
-		//printf("diff:%ld\n", diff);
+		lups++;
 	}
-	return;
+	return lups;
 }
 /* Method for initialization of a grid */
 static void init(GRID_T *grid, int width, int height){
