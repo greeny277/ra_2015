@@ -46,6 +46,9 @@ int main(int argc, char** argv){
 	init(newGrid, width, height);
 
 	int lups = loop(oldGrid, newGrid, width, height);
+	if(lups == -1){
+		exit(EXIT_FAILURE);
+	}
 
 	printf("------------------\n");
 	printf("LUPS: %d\n", lups);
@@ -60,8 +63,15 @@ int main(int argc, char** argv){
 }
 
 /*
- * Call jacobiVanilla() in a loop until LOOP_TIME
+ * @brief Call jacobiVanilla() in a loop until LOOP_TIME has
  * passed
+ *
+ * @param oldGrid holds same information as newGrid but
+ *                kept unchanged
+ * @param newGrid saves results of next iteration.
+ *
+ * @return Lattice (Grid) update per seconds (LUPS) or
+ *        -1 on error case.
  */
 static int loop(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 	struct timespec start;
@@ -69,7 +79,7 @@ static int loop(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 	double diff_sec = 0;
 	double startTime = getTime(&start);
 	if(startTime == -1){
-		exit(EXIT_FAILURE);
+		return -1;
 	}
 
 	int lups = 0;
@@ -80,7 +90,7 @@ static int loop(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 
 		double endTime = getTime(&end);
 		if(startTime == -1){
-			exit(EXIT_FAILURE);
+			return -1;
 		}
 
 		diff_sec = endTime - startTime;
