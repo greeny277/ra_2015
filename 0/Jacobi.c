@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <errno.h>
 #include <limits.h>
 #include <time.h>
@@ -11,9 +12,10 @@
 static void init(GRID_T *, int, int);
 static long help_strtol(char *);
 static void prettyPrint(GRID_T *, int, int);
+static void pretty_PPM_Print(GRID_T *, int, int, char *);
 static double getTime(struct timespec *);
-static int loop(GRID_T *, GRID_T *, int , int );
-static void copy_grid(GRID_T *, GRID_T *, int , int );
+static int loop(GRID_T *, GRID_T *, int , int);
+static void copy_grid(GRID_T *, GRID_T *, int , int);
 
 int main(int argc, char** argv){
 
@@ -154,6 +156,26 @@ static void prettyPrint(GRID_T *grid, int width, int height){
 	printf("------END GRID----------\n");
 	printf("\n");
 	return;
+}
+
+/* Creates _filename_ with ppm ending
+ * @return 0 on success
+ *        -1 if an error occured
+ */
+static int pretty_PPM_Print(GRID_T *grid, int width, int height, char *filename){
+	/* Create buffer for full filename with appendix */
+	char completeFilename[strlen(filename) + 4 + 1];
+	snprintf(completeFilename, strlen(completeFilename), "%s.ppm", filename);
+	/* Open file */
+	FILE *f = fopen(completeFilename, "w");
+	if(f == NULL){
+		return -1;
+	}
+	/* Add header */
+	fprintf(f, "P3\n");
+	fprintf(f, "%dx%d\n", width, height);
+	//TODO
+	fclose(f);
 }
 
 /*
