@@ -13,6 +13,7 @@ static long help_strtol(char *);
 static void prettyPrint(GRID_T *, int, int);
 static double getTime(struct timespec *);
 static void loop(GRID_T *, GRID_T *, int , int );
+static void copy_grid(GRID_T *, GRID_T *, int , int );
 
 int main(int argc, char** argv){
 
@@ -53,8 +54,6 @@ int main(int argc, char** argv){
 	loop(oldGrid, newGrid, width, height);
 
 	prettyPrint(newGrid, width, height);
-	printf("Old Grid after 1 Iteration:\n");
-	prettyPrint(oldGrid, width, height);
 
 	free(oldGrid);
 	free(newGrid);
@@ -75,8 +74,9 @@ static void loop(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 	}
 
 	while(diff_sec < LOOP_TIME){
-		oldGrid = newGrid;
 		jacobiVanilla(oldGrid, newGrid, width, height);
+
+		copy_grid(oldGrid, newGrid, width, height);
 
 		double endTime = getTime(&end);
 		if(startTime == -1){
@@ -157,4 +157,15 @@ static double getTime(struct timespec *tp){
 		return -1;
 	}
 	return (double)tp->tv_sec + (double)tp->tv_nsec / 1000000000.0;
+}
+
+/*
+ * @brief Copy entries from newGrid into oldGrid.
+ */
+static void copy_grid(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
+	for(int i = 0; i< height; i++){
+		for(int j = 0; j < width; j++){
+			oldGrid[width*i + j] = newGrid[width*i + j];
+		}
+	}
 }
