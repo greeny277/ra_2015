@@ -16,6 +16,7 @@ static int pretty_PPM_Print(GRID_T *, int, int, char *);
 static double getTime(struct timespec *);
 static int loop(GRID_T *, GRID_T *, int , int);
 static void copy_grid(GRID_T *, GRID_T *, int , int);
+static void gridEntryMap(FILE *, GRID_T);
 
 int main(int argc, char** argv){
 
@@ -58,6 +59,7 @@ int main(int argc, char** argv){
 	printf("Final grid:\n");
 	prettyPrint(newGrid, width, height);
 
+	pretty_PPM_Print(newGrid, width, height, "testfile");
 
 	free(oldGrid);
 	free(newGrid);
@@ -165,20 +167,51 @@ static void prettyPrint(GRID_T *grid, int width, int height){
 static int pretty_PPM_Print(GRID_T *grid, int width, int height, char *filename){
 	/* Create buffer for full filename with appendix */
 	char completeFilename[strlen(filename) + 4 + 1];
-	snprintf(completeFilename, strlen(completeFilename), "%s.ppm", filename);
-	/* Open file */
-	FILE *f = fopen(completeFilename, "w");
+	snprintf(completeFilename, strlen(filename)+5, "%s.ppm", filename);
+	/* Opens file */
+	printf("filename: %s\n", filename);
+	printf("filename: %s\n", completeFilename);
+	FILE *f = fopen(completeFilename, "w+");
 	if(f == NULL){
+		perror("fopen");
 		return -1;
 	}
 	/* Add header */
 	fprintf(f, "P3\n");
 	fprintf(f, "%dx%d\n", width, height);
-	//TODO
+	fprintf(f, "255\n");
+
+	for(int i = 0; i< height; i++){
+		for(int j = 0; j < width; j++){
+			gridEntryMap(f, grid[width*i + j]);
+		}
+		fprintf(f, "\n");
+	}
 	fclose(f);
 	return 0;
 }
 
+static void gridEntryMap(FILE *f, GRID_T entry){
+	int red, blue, green = 0; 
+	if(entry >= 0 && entry <= 0.25){
+		red = 255;
+		green = (entry * 255)/0.25;
+		blue = 0;
+	} else if(0.25 <= entry && entry <= 0.5){
+		red = -(255/0.25)*(entry - 0.5);
+		green = 255;
+		blue = 0;
+	} else if(0.5 <= entry && entry <= 0.75){
+		red = 0;
+		green = 255;
+		blue = (entry * 255)/0.25;
+	} else{
+		red = 0;
+		green = -(255/0.25)*(entry - 1);
+		blue = 255;
+	}
+	fprintf(f, "%d %d %d ", red, green, blue);
+}
 /*
  * Returns realtime in seconds. If an error occurs
  * -1 instead.
