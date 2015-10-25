@@ -16,7 +16,7 @@ OBJS    = $(SOURCES:%.c=%.o)
 all: Jacobi
 
 clean:
-	$(RM) Jacobi *.o
+	$(RM) Jacobi *.o *.s *.i
 
 Jacobi: $(OBJS)
 	$(CC) -o $@ $(OBJS) $(LDFLAGS)
