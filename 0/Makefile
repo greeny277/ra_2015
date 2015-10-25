@@ -1,6 +1,6 @@
-CC     = icc
+CC     = gcc
 CFLAGS = -std=c99 -Wall -D_XOPEN_SOURCE=700 -masm=intel -save-temps
-OPT    = -O3 -xHost -vec-report3
+OPT    = -O0 -march=native
 LDFLAGS=-lrt
 RM     = rm -f
 
