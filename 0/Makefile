@@ -1,5 +1,6 @@
 CC     = gcc
-CFLAGS = -std=c99 -Wall -D_XOPEN_SOURCE=700 -masm=intel -O0 -march=native -save-temps
+CFLAGS = -std=c99 -Wall -D_XOPEN_SOURCE=700 -masm=intel -march=native -save-temps
+OPT    = -O3
 LDFLAGS=-lrt
 RM     = rm -f
 
@@ -20,7 +21,7 @@ Jacobi: $(OBJS)
 	$(CC) -o $@ $(OBJS) $(LDFLAGS)
 
 .c.o:
-	$(CC) -c $(CFLAGS) $<
+	$(CC) -c $(CFLAGS) $(OPT) $<
 
-Jacobi.o:        Jacobi.c Jacobi.h Makefile JacobiVanilla.h
-JacobiVanilla.o: JacobiVanilla.c Jacobi.h JacobiVanilla.h
+Jacobi.o:        Jacobi.c Jacobi.h JacobiVanilla.h Makefile
+JacobiVanilla.o: JacobiVanilla.c Jacobi.h JacobiVanilla.h Makefile

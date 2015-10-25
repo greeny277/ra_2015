@@ -2,3 +2,5 @@
 Jacobi
 .*.swp
 *.ppm
+*.i
+*.s
