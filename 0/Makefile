@@ -1,5 +1,6 @@
 CC     = gcc
 CFLAGS = -std=c99 -Wall -D_XOPEN_SOURCE=700 -g
+LDFLAGS=-lrt
 RM     = rm -f
 
 # If any of the files in the following list does not exist, the corresponding .o
@@ -16,7 +17,7 @@ clean:
 	$(RM) Jacobi *.o
 
 Jacobi: $(OBJS)
-	$(CC) -o $@ $(OBJS)
+	$(CC) -o $@ $(OBJS) $(LDFLAGS)
 
 .c.o:
 	$(CC) -c $(CFLAGS) $<
