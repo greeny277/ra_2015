@@ -1,5 +1,5 @@
 CC     = gcc
-CFLAGS = -std=c99 -Wall -D_XOPEN_SOURCE=700 -g
+CFLAGS = -std=c99 -Wall -D_XOPEN_SOURCE=700
 LDFLAGS=-lrt
 RM     = rm -f
 
