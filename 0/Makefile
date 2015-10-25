@@ -1,6 +1,6 @@
 CC     = gcc
-CFLAGS = -std=c99 -Wall -D_XOPEN_SOURCE=700 -masm=intel -march=native -save-temps
-OPT    = -O3
+CFLAGS = -std=c99 -Wall -D_XOPEN_SOURCE=700 -masm=intel -save-temps
+OPT    = -O1 -march=native
 LDFLAGS=-lrt
 RM     = rm -f
 
