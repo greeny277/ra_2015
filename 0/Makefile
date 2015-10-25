@@ -5,8 +5,6 @@ OPT    = -O0 -march=native
 LDFLAGS=-lrt
 RM     = rm -f
 
-# If any of the files in the following list does not exist, the corresponding .o
-# module is taken from the libraries libmother.a or libjbuffer.a, respectively.
 SOURCES = $(shell ls Jacobi.c JacobiVanilla.c \
                   2> /dev/null) 
 OBJS    = $(SOURCES:%.c=%.o)
