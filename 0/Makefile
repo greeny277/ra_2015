@@ -1,5 +1,5 @@
 CC     = gcc
-CFLAGS = -std=c99 -Wall -D_XOPEN_SOURCE=700
+CFLAGS = -std=c99 -Wall -D_XOPEN_SOURCE=700 -masm=intel -O0 -march=native -save-temps
 LDFLAGS=-lrt
 RM     = rm -f
 
