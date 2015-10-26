@@ -30,7 +30,7 @@ static void gridEntryMap(FILE *, GRID_T);
 int main(int argc, char** argv){
 
 	if(argc < 3){
-		fprintf(stderr, "Too less arguments: Jacobi width height [outfile]\n");
+		fprintf(stderr, "Too less arguments: Jacobi width height [outfile1] [outfile2]\n");
 		exit(EXIT_FAILURE);
 	}
 
