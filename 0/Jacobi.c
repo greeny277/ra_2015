@@ -161,7 +161,8 @@ static long help_strtol(char *string){
 }
 
 
-/* Writes a ppm file for the grid in _filename_
+/*
+ * @brief Writes a ppm file for the grid in _filename_
  * @return 0 on success
  *        -1 if an error occured
  */
@@ -190,6 +191,13 @@ static int pretty_PPM_Print(GRID_T *grid, int width, int height, char *filename)
 	return 0;
 }
 
+/*
+ * @brief Map entry in grid to a rgb based output
+ * and write it to f.
+ *
+ * @param f Filepointer
+ * @param entry A grid pointer
+ */
 static void gridEntryMap(FILE *f, GRID_T entry){
 	int red, blue, green = 0; 
 	if(entry >= 0 && entry <= 0.25){
