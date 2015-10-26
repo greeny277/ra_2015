@@ -15,16 +15,18 @@
 \maketitle
 \section*{Aufgabe 2}
 
-Aufrufparameter: ./Jacobi 6000 500
+\textbf{Aufrufparameter:} ./Jacobi 6000 500
 
-\begin{tabular}{| c || c | c | c |}
-	LUPS & O0 & O2 & O3 \\
-	\hline \hline
-	gcc  & 21-26  & 103-105  & 180-190 \\
-	\hline
-	icc  & 22-27  & 125-132  & 119-133 \\
-	\hline
-\end{tabular}
+\begin{center}
+	\begin{tabular}{| c || c | c | c |}
+		LUPS & O0 & O2 & O3 \\
+		\hline \hline
+		gcc  & 21-26  & 103-105  & 180-190 \\
+		\hline
+		icc  & 22-27  & 125-132  & 119-133 \\
+		\hline
+	\end{tabular}
+\end{center}
 
 \subsection*{GCC}
 \begin{enumerate}
@@ -59,9 +61,18 @@ Aufrufparameter: ./Jacobi 6000 500
 		}
 \end{enumerate}
 \subsection*{ICC}
+Allgemein: Bei \textit{jump} Befehlen, steht als Kommentar die Wahrscheinlichkeit,
+des Sprungs.
 \begin{enumerate}
-	\item \textbf{icc - O0}:
-	\item \textbf{icc - O2}:
-	\item \textbf{icc - O3}:
+	\item{ \textbf{icc - O0}:
+			\begin{itemize}
+				\item Normaler Assembler Code. Zwischenergebnisse werden in Registern
+					gespeichert. Keine gr\"osseren Optimierungen.
+			\end{itemize}
+		}
+	\item{ \textbf{icc - O2}:
+		}
+	\item{ \textbf{icc - O3}:
+		}
 \end{enumerate}
 \end{document}
