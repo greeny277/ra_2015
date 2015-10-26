@@ -63,8 +63,14 @@ int main(int argc, char** argv){
 	}
 
 	printf("------------------\n");
-	printf("LUPS of version1: %d\n", lups);
+	printf("LUPS of version 1: %d\n", lups);
 
+	if(argc >= 4){
+		pretty_PPM_Print(newGrid, width, height, argv[3]);
+	} else {
+		pretty_PPM_Print(newGrid, width, height, "out1");
+	}
+	
 
 	/* Initialize grids left and upper border with 1.0
 	 * and the rest with 0.0 */
@@ -77,14 +83,12 @@ int main(int argc, char** argv){
 	}
 
 	printf("------------------\n");
-	printf("LUPS of version2: %d\n", lupsV2);
-	
+	printf("LUPS of version 2: %d\n", lupsV2);
 
-
-	if(argc >= 4){
-		pretty_PPM_Print(newGrid, width, height, argv[3]);
+	if(argc > 4){
+		pretty_PPM_Print(newGrid, width, height, argv[4]);
 	} else {
-		pretty_PPM_Print(newGrid, width, height, "out");
+		pretty_PPM_Print(newGrid, width, height, "out2");	
 	}
 
 	free(oldGrid);
