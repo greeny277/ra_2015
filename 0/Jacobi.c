@@ -19,12 +19,12 @@
 /* Method declarations */
 static void init(GRID_T *, int, int);
 static long help_strtol(char *);
-//static void prettyPrint(GRID_T *, int, int);
 static int pretty_PPM_Print(GRID_T *, int, int, char *);
 static double getTime(struct timespec *);
 static int loop(GRID_T *, GRID_T *, int , int);
-//static void copy_grid(GRID_T *, GRID_T *, int , int);
 static void gridEntryMap(FILE *, GRID_T);
+//static void copy_grid(GRID_T *, GRID_T *, int , int);
+//static void prettyPrint(GRID_T *, int, int);
 
 int main(int argc, char** argv){
 
