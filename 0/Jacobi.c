@@ -1,3 +1,11 @@
+/*
+ * ICC Version:
+ * 1) intelmpi/4.1.3.048-intel
+ * 2) mkl/11.0up05
+ * 3) intel64/13.1up03
+ *
+ * GCC Version: 4.9.2
+ */
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
