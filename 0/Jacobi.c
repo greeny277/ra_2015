@@ -15,7 +15,7 @@ static long help_strtol(char *);
 static int pretty_PPM_Print(GRID_T *, int, int, char *);
 static double getTime(struct timespec *);
 static int loop(GRID_T *, GRID_T *, int , int);
-static void copy_grid(GRID_T *, GRID_T *, int , int);
+//static void copy_grid(GRID_T *, GRID_T *, int , int);
 static void gridEntryMap(FILE *, GRID_T);
 
 int main(int argc, char** argv){
@@ -87,11 +87,14 @@ static int loop(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 		return -1;
 	}
 
+	GRID_T *tmp;
 	int lups = 0;
 	while(diff_sec < LOOP_TIME){
 		jacobiVanilla(oldGrid, newGrid, width, height);
 
-		copy_grid(oldGrid, newGrid, width, height);
+		tmp = oldGrid;
+		oldGrid = newGrid;
+		newGrid = tmp;
 
 		double endTime = getTime(&end);
 		if(endTime == -1){
@@ -212,14 +215,14 @@ static double getTime(struct timespec *tp){
 
 /*
  * @brief Copy entries from newGrid into oldGrid.
- */
+ *
 static void copy_grid(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 	for(int i = 0; i< height; i++){
 		for(int j = 0; j < width; j++){
 			oldGrid[width*i + j] = newGrid[width*i + j];
 		}
 	}
-}
+}*/
 
 /* Print Grid in asci art for debugging
 static void prettyPrint(GRID_T *grid, int width, int height){
