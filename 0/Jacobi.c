@@ -22,6 +22,7 @@ static long help_strtol(char *);
 static int pretty_PPM_Print(GRID_T *, int, int, char *);
 static double getTime(struct timespec *);
 static int loop(GRID_T *, GRID_T *, int , int);
+static int loopV2(GRID_T *, GRID_T *, int , int);
 static void gridEntryMap(FILE *, GRID_T);
 //static void copy_grid(GRID_T *, GRID_T *, int , int);
 //static void prettyPrint(GRID_T *, int, int);
@@ -62,8 +63,24 @@ int main(int argc, char** argv){
 	}
 
 	printf("------------------\n");
-	printf("LUPS: %d\n", lups);
+	printf("LUPS of version1: %d\n", lups);
+
+
+	/* Initialize grids left and upper border with 1.0
+	 * and the rest with 0.0 */
+	init(oldGrid, width, height);
+	init(newGrid, width, height);
+
+	int lupsV2 = loopV2(oldGrid, newGrid, width, height);
+	if(lupsV2 == -1){
+		exit(EXIT_FAILURE);
+	}
+
+	printf("------------------\n");
+	printf("LUPS of version2: %d\n", lupsV2);
 	
+
+
 	if(argc >= 4){
 		pretty_PPM_Print(newGrid, width, height, argv[3]);
 	} else {
@@ -114,9 +131,72 @@ static int loop(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 
 		lups++;
 	}
+
+	/*Testing*/
+	//printf("------------------\n");
+	//printf("Total amout of updates: %d\n", lups);
+	//printf("Amout of time V2 uses: %f\n", diff_sec);
+	
 	/* Scale lups to LOOP_TIME */
 	return (lups/diff_sec);
 }
+
+/*
+ * @brief Updated loop version with twice as many lu for each 
+ * while-loop iteration
+ */
+static int loopV2(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
+	struct timespec start;
+	struct timespec end;
+	double endTime;
+	double diff_sec = 0;
+	double startTime = getTime(&start);
+	if(startTime == -1){
+		return -1;
+	}
+	GRID_T *tmp;
+	int lu = 1;
+	do{
+		//for loop for execution and the copy of pointers
+		for(int i = 0; i < lu; ++i)
+		{	
+			jacobiVanilla(oldGrid, newGrid, width, height);
+
+			tmp = oldGrid;
+			oldGrid = newGrid;
+			newGrid = tmp;			
+		}
+		//double the number of repeats each time
+		lu *= 2;
+
+		//this funktion costs time -> we reduce the amout!
+		endTime = getTime(&end);
+		if(endTime == -1){
+			return -1;
+		}	
+
+		diff_sec = endTime - startTime;	
+	} while(diff_sec < LOOP_TIME);
+
+	/*
+	 *	1:	1->1 iteration	and lu = 2
+	 *	2:	3->1+2 iter	and lu = 4
+	 *	3:	7->1+2+4 iter	and lu = 8
+	 * The number of reapts we execute in every iteration is 1 bigger than the sum of the iter before	
+	 */
+	--lu;
+
+	/*Testing*/
+	//printf("------------------\n");
+	//printf("Total amout of updates: %d\n", lu);
+	//printf("Amout of time V2 uses: %f\n", diff_sec);
+
+
+	/* Scale lups to LOOP_TIME */
+	return (lu/diff_sec);
+}
+
+
 /* Method for initialization of a grid */
 static void init(GRID_T *grid, int width, int height){
 	for(int i = 0; i < height; i++){
