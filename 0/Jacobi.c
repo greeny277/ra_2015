@@ -89,6 +89,7 @@ int main(int argc, char** argv){
 static int loop(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 	struct timespec start;
 	struct timespec end;
+	double endTime;
 	double diff_sec = 0;
 	double startTime = getTime(&start);
 	if(startTime == -1){
@@ -104,7 +105,7 @@ static int loop(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 		oldGrid = newGrid;
 		newGrid = tmp;
 
-		double endTime = getTime(&end);
+		endTime = getTime(&end);
 		if(endTime == -1){
 			return -1;
 		}
@@ -113,7 +114,8 @@ static int loop(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 
 		lups++;
 	}
-	return lups;
+	/* Scale lups to LOOP_TIME */
+	return (lups/diff_sec);
 }
 /* Method for initialization of a grid */
 static void init(GRID_T *grid, int width, int height){
