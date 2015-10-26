@@ -94,7 +94,7 @@ static int loop(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 		copy_grid(oldGrid, newGrid, width, height);
 
 		double endTime = getTime(&end);
-		if(startTime == -1){
+		if(endTime == -1){
 			return -1;
 		}
 
