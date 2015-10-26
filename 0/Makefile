@@ -1,8 +1,8 @@
-#CC     = gcc
-CC     = icc
+CC     = gcc
+#CC     = icc
 CFLAGS = -std=c99 -Wall -D_XOPEN_SOURCE=700 -masm=intel -save-temps
-OPT    = -O0 -xHost
-LDFLAGS=-lrt
+OPT    = -O0 -march=native
+LDFLAGS= -lrt
 RM     = rm -f
 
 SOURCES = $(shell ls Jacobi.c JacobiVanilla.c \
