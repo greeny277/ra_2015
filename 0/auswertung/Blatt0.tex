@@ -1,0 +1,67 @@
+\documentclass{article}
+% -------- Umlaute korrekt ----------------
+\usepackage[latin1, utf8]{inputenc}
+\usepackage[ngerman]{babel}
+%-------------------------------------------
+
+% Einrueckung unterbinden nach Absatz
+\setlength{\parindent}{0pt}
+
+\DeclareMathSizes{10}{10}{10}{10}
+\title{RA -- R\"U Blatt 0}
+\author{Christian Bay, QUED}
+\date{\today}
+\begin{document}
+\maketitle
+\section*{Aufgabe 2}
+
+Aufrufparameter: ./Jacobi 6000 500
+
+\begin{tabular}{| c || c | c | c |}
+	LUPS & O0 & O2 & O3 \\
+	\hline \hline
+	gcc  & 21-26  & 103-105  & 180-190 \\
+	\hline
+	icc  & 22-27  & 125-132  & 119-133 \\
+	\hline
+\end{tabular}
+
+\subsection*{GCC}
+\begin{enumerate}
+	\item{ \textbf{gcc -- O0}:
+			\begin{itemize}
+				\item Labels verteilt $\rightarrow$ viele Sprungoperationen
+				\item Kleiner Init Teil: Parameter auf Stack in Register kopiert
+				\item Ergebnisse aller arithmetischen Operationen werden zwischengespeichert
+			\end{itemize}
+		}
+	\item{ \textbf{gcc -- O2}:
+			\begin{itemize}
+				\item Um $\approx 10\%$ k\"urzer als O0 Variante
+				\item Gr\"osserer Init Part: Register werden in Abh"angigkeit
+					von anderen Registerinhalten gesetzt $\rightarrow$ schnellerer Arrayzugriff
+				\item Ergebnisse der arithmetischen Operationen werden so wenig
+					zwischengespeichert wie m\"glich $\rightarrow$ CISC Befehle
+				\item Labels sind dem Programmverlauf angeordnet:\\
+					innere Schleifenvariable erh"ohen $\rightarrow$ innerer Schleifen-Body $\rightarrow$
+					\"aussere Schleifenvariable erh\"ohen\\
+					$\longrightarrow$ Weniger Spr\"unge
+			\end{itemize}
+		}
+	\item{ \textbf{gcc -- O3}:
+			\begin{itemize}
+				\item Assemblercode ist um das f\"unfache L"anger im Vergleich
+					zu O0 und O2.
+				\item \# Labels: 86
+				\item In einem Zyklus werden viel mehr Werte aus Grid geladen\\
+					$\rightarrow$ Kein doppeltes Laden von Werten
+			\end{itemize}
+		}
+\end{enumerate}
+\subsection*{ICC}
+\begin{enumerate}
+	\item \textbf{icc - O0}:
+	\item \textbf{icc - O2}:
+	\item \textbf{icc - O3}:
+\end{enumerate}
+\end{document}
