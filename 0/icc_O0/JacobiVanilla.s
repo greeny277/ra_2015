@@ -20,103 +20,95 @@ jacobiVanilla:
 ..___tag_value_jacobiVanilla.3:                                 #
         mov       rbp, rsp                                      #7.76
 ..___tag_value_jacobiVanilla.4:                                 #
-        sub       rsp, 64                                       #7.76
+        sub       rsp, 48                                       #7.76
         mov       QWORD PTR [-40+rbp], rdi                      #7.76
         mov       QWORD PTR [-32+rbp], rsi                      #7.76
         mov       DWORD PTR [-24+rbp], edx                      #7.76
         mov       DWORD PTR [-16+rbp], ecx                      #7.76
-        mov       DWORD PTR [-64+rbp], 1                        #9.12
+        mov       DWORD PTR [-48+rbp], 1                        #8.12
                                 # LOE rbx rbp rsp r12 r13 r14 r15 rip
 ..B1.2:                         # Preds ..B1.3 ..B1.1
-        mov       eax, DWORD PTR [-64+rbp]                      #9.17
-        mov       edx, -1                                       #9.2
-        add       edx, DWORD PTR [-16+rbp]                      #9.28
-        cmp       eax, edx                                      #9.28
-        jl        ..B1.4        # Prob 50%                      #9.28
-        jmp       ..B1.7        # Prob 100%                     #9.28
+        mov       eax, DWORD PTR [-48+rbp]                      #8.17
+        mov       edx, -1                                       #8.2
+        add       edx, DWORD PTR [-16+rbp]                      #8.28
+        cmp       eax, edx                                      #8.28
+        jl        ..B1.4        # Prob 50%                      #8.28
+        jmp       ..B1.7        # Prob 100%                     #8.28
                                 # LOE rbx rbp rsp r12 r13 r14 r15 rip
 ..B1.3:                         # Preds ..B1.5
-        mov       eax, 1                                        #9.31
-        add       eax, DWORD PTR [-64+rbp]                      #9.31
-        mov       DWORD PTR [-64+rbp], eax                      #9.31
-        jmp       ..B1.2        # Prob 100%                     #9.31
+        mov       eax, 1                                        #8.31
+        add       eax, DWORD PTR [-48+rbp]                      #8.31
+        mov       DWORD PTR [-48+rbp], eax                      #8.31
+        jmp       ..B1.2        # Prob 100%                     #8.31
                                 # LOE rbx rbp rsp r12 r13 r14 r15 rip
 ..B1.4:                         # Preds ..B1.2
-        mov       DWORD PTR [-60+rbp], 1                        #10.13
+        mov       DWORD PTR [-44+rbp], 1                        #9.13
                                 # LOE rbx rbp rsp r12 r13 r14 r15 rip
 ..B1.5:                         # Preds ..B1.6 ..B1.4
-        mov       eax, DWORD PTR [-60+rbp]                      #10.18
-        mov       edx, -1                                       #10.3
-        add       edx, DWORD PTR [-24+rbp]                      #10.28
-        cmp       eax, edx                                      #10.28
-        jge       ..B1.3        # Prob 50%                      #10.28
+        mov       eax, DWORD PTR [-44+rbp]                      #9.18
+        mov       edx, -1                                       #9.3
+        add       edx, DWORD PTR [-24+rbp]                      #9.28
+        cmp       eax, edx                                      #9.28
+        jge       ..B1.3        # Prob 50%                      #9.28
                                 # LOE rbx rbp rsp r12 r13 r14 r15 rip
 ..B1.6:                         # Preds ..B1.5
-        mov       eax, DWORD PTR [-24+rbp]                      #11.21
-        imul      eax, DWORD PTR [-64+rbp]                      #11.21
-        mov       edx, -1                                       #11.4
-        add       edx, DWORD PTR [-60+rbp]                      #11.32
-        add       eax, edx                                      #11.32
-        movsxd    rax, eax                                      #11.11
-        imul      rax, rax, 4                                   #11.11
-        add       rax, QWORD PTR [-40+rbp]                      #11.11
-        movss     xmm0, DWORD PTR [rax]                         #11.11
-        movss     DWORD PTR [-56+rbp], xmm0                     #11.4
-        mov       eax, DWORD PTR [-24+rbp]                      #12.22
-        imul      eax, DWORD PTR [-64+rbp]                      #12.22
-        mov       edx, 1                                        #12.4
-        add       edx, DWORD PTR [-60+rbp]                      #12.33
-        add       eax, edx                                      #12.33
-        movsxd    rax, eax                                      #12.12
-        imul      rax, rax, 4                                   #12.12
-        add       rax, QWORD PTR [-40+rbp]                      #12.12
-        movss     xmm0, DWORD PTR [rax]                         #12.12
-        movss     DWORD PTR [-52+rbp], xmm0                     #12.4
-        mov       eax, -1                                       #13.4
-        add       eax, DWORD PTR [-64+rbp]                      #13.20
-        imul      eax, DWORD PTR [-24+rbp]                      #13.23
-        add       eax, DWORD PTR [-60+rbp]                      #13.31
-        movsxd    rax, eax                                      #13.9
-        imul      rax, rax, 4                                   #13.9
-        add       rax, QWORD PTR [-40+rbp]                      #13.9
-        movss     xmm0, DWORD PTR [rax]                         #13.9
-        movss     DWORD PTR [-48+rbp], xmm0                     #13.4
-        mov       eax, 1                                        #14.4
-        add       eax, DWORD PTR [-64+rbp]                      #14.22
-        imul      eax, DWORD PTR [-24+rbp]                      #14.25
-        add       eax, DWORD PTR [-60+rbp]                      #14.33
-        movsxd    rax, eax                                      #14.11
-        imul      rax, rax, 4                                   #14.11
-        add       rax, QWORD PTR [-40+rbp]                      #14.11
-        movss     xmm0, DWORD PTR [rax]                         #14.11
-        movss     DWORD PTR [-44+rbp], xmm0                     #14.4
-        movss     xmm0, DWORD PTR [-56+rbp]                     #15.28
-        movss     xmm1, DWORD PTR [-52+rbp]                     #15.35
-        addss     xmm0, xmm1                                    #15.35
-        movss     xmm1, DWORD PTR [-44+rbp]                     #15.43
-        addss     xmm0, xmm1                                    #15.43
-        movss     xmm1, DWORD PTR [-48+rbp]                     #15.50
-        addss     xmm0, xmm1                                    #15.50
-        cvtss2sd  xmm0, xmm0                                    #15.50
-        movsd     xmm1, QWORD PTR .L_2il0floatpacket.4[rip]     #15.56
-        mulsd     xmm0, xmm1                                    #15.56
-        cvtsd2ss  xmm0, xmm0                                    #15.56
-        mov       eax, DWORD PTR [-24+rbp]                      #15.14
-        imul      eax, DWORD PTR [-64+rbp]                      #15.14
-        add       eax, DWORD PTR [-60+rbp]                      #15.22
-        movsxd    rax, eax                                      #15.4
-        imul      rax, rax, 4                                   #15.4
-        add       rax, QWORD PTR [-32+rbp]                      #15.4
-        movss     DWORD PTR [rax], xmm0                         #15.4
-        mov       eax, 1                                        #10.31
-        add       eax, DWORD PTR [-60+rbp]                      #10.31
-        mov       DWORD PTR [-60+rbp], eax                      #10.31
-        jmp       ..B1.5        # Prob 100%                     #10.31
+        mov       eax, DWORD PTR [-24+rbp]                      #10.38
+        imul      eax, DWORD PTR [-48+rbp]                      #10.38
+        mov       edx, -1                                       #10.4
+        add       edx, DWORD PTR [-44+rbp]                      #10.49
+        add       eax, edx                                      #10.49
+        movsxd    rax, eax                                      #10.28
+        imul      rax, rax, 4                                   #10.28
+        add       rax, QWORD PTR [-40+rbp]                      #10.28
+        mov       edx, DWORD PTR [-24+rbp]                      #10.65
+        imul      edx, DWORD PTR [-48+rbp]                      #10.65
+        mov       ecx, 1                                        #10.4
+        add       ecx, DWORD PTR [-44+rbp]                      #10.76
+        add       edx, ecx                                      #10.76
+        movsxd    rdx, edx                                      #10.55
+        imul      rdx, rdx, 4                                   #10.55
+        add       rdx, QWORD PTR [-40+rbp]                      #10.55
+        movss     xmm0, DWORD PTR [rax]                         #10.28
+        movss     xmm1, DWORD PTR [rdx]                         #10.55
+        addss     xmm0, xmm1                                    #10.55
+        mov       eax, -1                                       #10.4
+        add       eax, DWORD PTR [-48+rbp]                      #10.93
+        imul      eax, DWORD PTR [-24+rbp]                      #10.96
+        add       eax, DWORD PTR [-44+rbp]                      #10.104
+        movsxd    rax, eax                                      #10.82
+        imul      rax, rax, 4                                   #10.82
+        add       rax, QWORD PTR [-40+rbp]                      #10.82
+        movss     xmm1, DWORD PTR [rax]                         #10.82
+        addss     xmm0, xmm1                                    #10.82
+        mov       eax, 1                                        #10.4
+        add       eax, DWORD PTR [-48+rbp]                      #10.120
+        imul      eax, DWORD PTR [-24+rbp]                      #10.123
+        add       eax, DWORD PTR [-44+rbp]                      #10.131
+        movsxd    rax, eax                                      #10.109
+        imul      rax, rax, 4                                   #10.109
+        add       rax, QWORD PTR [-40+rbp]                      #10.109
+        movss     xmm1, DWORD PTR [rax]                         #10.109
+        addss     xmm0, xmm1                                    #10.109
+        cvtss2sd  xmm0, xmm0                                    #10.109
+        movsd     xmm1, QWORD PTR .L_2il0floatpacket.4[rip]     #10.137
+        mulsd     xmm0, xmm1                                    #10.137
+        cvtsd2ss  xmm0, xmm0                                    #10.137
+        mov       eax, DWORD PTR [-24+rbp]                      #10.14
+        imul      eax, DWORD PTR [-48+rbp]                      #10.14
+        add       eax, DWORD PTR [-44+rbp]                      #10.22
+        movsxd    rax, eax                                      #10.4
+        imul      rax, rax, 4                                   #10.4
+        add       rax, QWORD PTR [-32+rbp]                      #10.4
+        movss     DWORD PTR [rax], xmm0                         #10.4
+        mov       eax, 1                                        #9.31
+        add       eax, DWORD PTR [-44+rbp]                      #9.31
+        mov       DWORD PTR [-44+rbp], eax                      #9.31
+        jmp       ..B1.5        # Prob 100%                     #9.31
                                 # LOE rbx rbp rsp r12 r13 r14 r15 rip
 ..B1.7:                         # Preds ..B1.2
-        leave                                                   #18.2
+        leave                                                   #13.2
 ..___tag_value_jacobiVanilla.6:                                 #
-        ret                                                     #18.2
+        ret                                                     #13.2
         .align    2,0x90
 ..___tag_value_jacobiVanilla.7:                                 #
                                 # LOE

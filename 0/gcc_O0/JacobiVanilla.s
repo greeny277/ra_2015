@@ -11,10 +11,10 @@ jacobiVanilla:
 	.cfi_offset 6, -16
 	mov	rbp, rsp
 	.cfi_def_cfa_register 6
-	mov	QWORD PTR [rbp-40], rdi
-	mov	QWORD PTR [rbp-48], rsi
-	mov	DWORD PTR [rbp-52], edx
-	mov	DWORD PTR [rbp-56], ecx
+	mov	QWORD PTR [rbp-24], rdi
+	mov	QWORD PTR [rbp-32], rsi
+	mov	DWORD PTR [rbp-36], edx
+	mov	DWORD PTR [rbp-40], ecx
 	mov	DWORD PTR [rbp-4], 1
 	jmp	.L2
 .L5:
@@ -22,83 +22,77 @@ jacobiVanilla:
 	jmp	.L3
 .L4:
 	mov	eax, DWORD PTR [rbp-4]
-	imul	eax, DWORD PTR [rbp-52]
+	imul	eax, DWORD PTR [rbp-36]
+	mov	edx, eax
+	mov	eax, DWORD PTR [rbp-8]
+	add	eax, edx
+	cdqe
+	lea	rdx, [0+rax*4]
+	mov	rax, QWORD PTR [rbp-32]
+	lea	rcx, [rdx+rax]
+	mov	eax, DWORD PTR [rbp-4]
+	imul	eax, DWORD PTR [rbp-36]
 	mov	edx, DWORD PTR [rbp-8]
 	sub	edx, 1
 	add	eax, edx
 	cdqe
 	lea	rdx, [0+rax*4]
-	mov	rax, QWORD PTR [rbp-40]
+	mov	rax, QWORD PTR [rbp-24]
 	add	rax, rdx
-	mov	eax, DWORD PTR [rax]
-	mov	DWORD PTR [rbp-12], eax
+	mov	edx, DWORD PTR [rax]
 	mov	eax, DWORD PTR [rbp-4]
-	imul	eax, DWORD PTR [rbp-52]
-	mov	edx, DWORD PTR [rbp-8]
-	add	edx, 1
-	add	eax, edx
+	imul	eax, DWORD PTR [rbp-36]
+	mov	esi, DWORD PTR [rbp-8]
+	add	esi, 1
+	add	eax, esi
 	cdqe
-	lea	rdx, [0+rax*4]
-	mov	rax, QWORD PTR [rbp-40]
-	add	rax, rdx
+	lea	rsi, [0+rax*4]
+	mov	rax, QWORD PTR [rbp-24]
+	add	rax, rsi
 	mov	eax, DWORD PTR [rax]
-	mov	DWORD PTR [rbp-16], eax
+	movd	xmm0, edx
+	movd	xmm2, eax
+	addss	xmm0, xmm2
 	mov	eax, DWORD PTR [rbp-4]
 	sub	eax, 1
-	imul	eax, DWORD PTR [rbp-52]
+	imul	eax, DWORD PTR [rbp-36]
 	mov	edx, eax
 	mov	eax, DWORD PTR [rbp-8]
 	add	eax, edx
 	cdqe
 	lea	rdx, [0+rax*4]
-	mov	rax, QWORD PTR [rbp-40]
+	mov	rax, QWORD PTR [rbp-24]
 	add	rax, rdx
 	mov	eax, DWORD PTR [rax]
-	mov	DWORD PTR [rbp-20], eax
+	movd	xmm3, eax
+	addss	xmm0, xmm3
 	mov	eax, DWORD PTR [rbp-4]
 	add	eax, 1
-	imul	eax, DWORD PTR [rbp-52]
+	imul	eax, DWORD PTR [rbp-36]
 	mov	edx, eax
 	mov	eax, DWORD PTR [rbp-8]
 	add	eax, edx
 	cdqe
 	lea	rdx, [0+rax*4]
-	mov	rax, QWORD PTR [rbp-40]
+	mov	rax, QWORD PTR [rbp-24]
 	add	rax, rdx
 	mov	eax, DWORD PTR [rax]
-	mov	DWORD PTR [rbp-24], eax
-	mov	eax, DWORD PTR [rbp-4]
-	imul	eax, DWORD PTR [rbp-52]
-	mov	edx, eax
-	mov	eax, DWORD PTR [rbp-8]
-	add	eax, edx
-	cdqe
-	lea	rdx, [0+rax*4]
-	mov	rax, QWORD PTR [rbp-48]
-	add	rdx, rax
-	mov	eax, DWORD PTR [rbp-12]
-	movd	xmm1, eax
-	addss	xmm1, DWORD PTR [rbp-16]
-	movd	eax, xmm1
-	movd	xmm2, eax
-	addss	xmm2, DWORD PTR [rbp-24]
-	movd	eax, xmm2
-	movd	xmm0, eax
-	addss	xmm0, DWORD PTR [rbp-20]
+	movd	xmm4, eax
+	addss	xmm0, xmm4
 	mov	eax, DWORD PTR .LC0[rip]
-	movd	xmm3, eax
-	mulss	xmm3, xmm0
-	movd	eax, xmm3
-	mov	DWORD PTR [rdx], eax
+	movd	xmm1, eax
+	mulss	xmm1, xmm0
+	movd	eax, xmm1
+	mov	DWORD PTR [rcx], eax
 	add	DWORD PTR [rbp-8], 1
 .L3:
-	mov	eax, DWORD PTR [rbp-52]
+	mov	eax, DWORD PTR [rbp-36]
 	sub	eax, 1
 	cmp	eax, DWORD PTR [rbp-8]
 	jg	.L4
 	add	DWORD PTR [rbp-4], 1
 .L2:
-	mov	eax, DWORD PTR [rbp-56]
+	mov	eax, DWORD PTR [rbp-40]
 	sub	eax, 1
 	cmp	eax, DWORD PTR [rbp-4]
 	jg	.L5

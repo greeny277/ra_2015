@@ -1,7 +1,7 @@
-CC     = gcc
-#CC     = icc
+#CC     = gcc
+CC     = icc
 CFLAGS = -std=c99 -Wall -D_XOPEN_SOURCE=700 -masm=intel -save-temps
-OPT    = -O0 -march=native
+OPT    = -O0 -xHost
 LDFLAGS=-lrt
 RM     = rm -f
 

@@ -54,8 +54,8 @@ jacobiVanilla:
 .L4:
 	movss	xmm0, DWORD PTR [rcx+rax*4]
 	addss	xmm0, DWORD PTR [rcx+8+rax*4]
-	addss	xmm0, DWORD PTR [rdi+4+rax*4]
 	addss	xmm0, DWORD PTR [r8+4+rax*4]
+	addss	xmm0, DWORD PTR [rdi+4+rax*4]
 	mulss	xmm0, xmm1
 	movss	DWORD PTR [rsi+4+rax*4], xmm0
 	add	rax, 1
