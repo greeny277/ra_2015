@@ -4,5 +4,5 @@ Jacobi
 *.ppm
 *.i
 *.s
-!gcc*/*
-!icc*/*
+!gcc*/*.s
+!icc*/*.s
