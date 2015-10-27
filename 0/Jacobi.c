@@ -163,12 +163,12 @@ static int loopV2(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 	do{
 		//for loop for execution and the copy of pointers
 		for(int i = 0; i < lu; ++i)
-		{	
+		{
 			jacobiVanilla(oldGrid, newGrid, width, height);
 
 			tmp = oldGrid;
 			oldGrid = newGrid;
-			newGrid = tmp;			
+			newGrid = tmp;
 		}
 		//double the number of repeats each time
 		lu *= 2;
@@ -177,9 +177,9 @@ static int loopV2(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 		endTime = getTime(&end);
 		if(endTime == -1){
 			return -1;
-		}	
+		}
 
-		diff_sec = endTime - startTime;	
+		diff_sec = endTime - startTime;
 	} while(diff_sec < LOOP_TIME);
 
 	/*
