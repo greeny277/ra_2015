@@ -38,6 +38,12 @@ int main(int argc, char** argv){
 	width  = help_strtol(argv[1]);
 	height = help_strtol(argv[2]);
 
+	if(width <= 0 || height <= 0){
+		fprintf(stderr, "Usage: Jacobi width height [outfile1] [outfile2]\n");
+		fprintf(stderr, "width and height must be greater than 0\n");
+		exit(EXIT_FAILURE);
+	}
+
 	/* Variables */
 	GRID_T *oldGrid, *newGrid;
 
