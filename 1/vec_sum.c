@@ -17,15 +17,10 @@
 #include "vec_sum_vanilla.h"
 
 /* Method declarations */
-static void init(GRID_T *, int, int);
+static void init(GRID_T *, int);
 static long help_strtol(char *);
-//static int pretty_PPM_Print(GRID_T *, int, int, char *);
 static double getTime(struct timespec *);
-//static int loop(GRID_T *, GRID_T *, int , int);
-static int loopV2(GRID_T *, GRID_T *, int , int);
-//static void gridEntryMap(FILE *, GRID_T);
-//static void copy_grid(GRID_T *, GRID_T *, int , int);
-//static void prettyPrint(GRID_T *, int, int);
+static int loopV2(GRID_T *, int);
 
 int main(int argc, char** argv){
 
@@ -53,14 +48,13 @@ int main(int argc, char** argv){
 	}
 
 	//Calculate the number of elements = size
-	int length = (1024 * size) / sizeof(GRID_T) 
+	int length = (1024 * size) / sizeof(GRID_T);
 	
 
-	/* Initialize grids left and upper border with 1.0
-	 * and the rest with 0.0 */
+	/* Initialize the vector with 1.0 */
 	init(vec, length);
 
-	int mups = loopV2(oldGrid, newGrid, width, height);
+	int mups = loopV2(vec, length);
 	if(mups == -1){
 		exit(EXIT_FAILURE);
 	}
@@ -92,7 +86,7 @@ static int loopV2(GRID_T *vec, int length){
 		//for loop for execution and the copy of pointers
 		for(int i = 0; i < lu; ++i)
 		{
-			sum = vec_sum_vanilla(vec, length);
+			sum = vec_sum(vec, length);
 			if(sum == -1){
 				return -1;
 			}
@@ -130,10 +124,8 @@ static int loopV2(GRID_T *vec, int length){
 
 /* Method for initialization of a grid */
 static void init(GRID_T *vec, int length){
-	GRID_T
-	
 	for(int i = 0; i < length; ++i){
-		vec[i] = 1.1f
+		vec[i] = 1.1f;
 	}
 	return;
 }

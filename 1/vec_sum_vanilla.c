@@ -7,12 +7,9 @@
 
 GRID_T vec_sum(GRID_T *vect, int length){
 	
-	GRID_T sum = 0.0f;
+	GRID_T sum = 0;
 	for(int i = 0; i < length; i++){
 		sum += vect[i];
 	}
-	if(sum == 0.0f){
-		return -1;
-	}
-	
+	return sum;
 }
