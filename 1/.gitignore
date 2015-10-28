@@ -1,5 +1,5 @@
 *.o
-Jacobi
+vec_sum
 .*.swp
 *.ppm
 *.i
