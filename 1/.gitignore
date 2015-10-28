@@ -1,0 +1,8 @@
+*.o
+Jacobi
+.*.swp
+*.ppm
+*.i
+*.s
+!gcc*/*.s
+!icc*/*.s
