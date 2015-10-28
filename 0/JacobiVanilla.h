@@ -7,4 +7,4 @@
  *
  * @return No return value
  * */
-void jacobiVanilla(GRID_T *oldGrid, GRID_T *newGrid, int, int);
+void jacobiVanilla(GRID_T *, GRID_T *, int, int);
