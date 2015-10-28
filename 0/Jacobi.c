@@ -142,11 +142,6 @@ static int loop(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 		lups++;
 	}
 
-	/*Testing*/
-	//printf("------------------\n");
-	//printf("Total amout of updates: %d\n", lups);
-	//printf("Amout of time V2 uses: %f\n", diff_sec);
-	
 	/* Scale lups to LOOP_TIME */
 	return (lups/diff_sec);
 }
@@ -195,12 +190,6 @@ static int loopV2(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 	 * The number of reapts we execute in every iteration is 1 bigger than the sum of the iter before	
 	 */
 	--lu;
-
-	/*Testing*/
-	//printf("------------------\n");
-	//printf("Total amout of updates: %d\n", lu);
-	//printf("Amout of time V2 uses: %f\n", diff_sec);
-
 
 	/* Scale lups to LOOP_TIME */
 	return (lu/diff_sec);

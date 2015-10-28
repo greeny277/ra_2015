@@ -5,22 +5,22 @@ OPT    = -O0 -march=native
 LDFLAGS= -lrt
 RM     = rm -f
 
-SOURCES = $(shell ls Jacobi.c JacobiVanilla.c \
+SOURCES = $(shell ls vec_sum.c vec_sum_vanilla.c \
                   2> /dev/null) 
 OBJS    = $(SOURCES:%.c=%.o)
 
 .PHONY: all clean
 
-all: Jacobi
+all: vec_sum
 
 clean:
-	$(RM) Jacobi *.o *.s *.i
+	$(RM) vec_sum *.o *.s *.i
 
-Jacobi: $(OBJS)
+vec_sum: $(OBJS)
 	$(CC) -o $@ $(OBJS) $(LDFLAGS)
 
 .c.o:
 	$(CC) -c $(CFLAGS) $(OPT) $<
 
-Jacobi.o:        Jacobi.c Jacobi.h JacobiVanilla.h Makefile
-JacobiVanilla.o: JacobiVanilla.c Jacobi.h JacobiVanilla.h Makefile
+vec_sum.o:        vec_sum.c vec_sum.h vec_sum_vanilla.h Makefile
+vec_sum_vanilla.o: vec_sum_vanilla.c vec_sum.h vec_sum_vanilla.h Makefile
