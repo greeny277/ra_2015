@@ -24,7 +24,7 @@ static int loopV2(GRID_T *, int);
 
 int main(int argc, char** argv){
 
-	if(argc < 3){
+	if(argc < 2){
 		fprintf(stderr, "Too less arguments: vec_sum sizeOfVector\n");
 		exit(EXIT_FAILURE);
 	}
@@ -80,9 +80,10 @@ static int loopV2(GRID_T *vec, int length){
 		return -1;
 	}
 	
-	GRID_T sum = -1.0f; 
+	GRID_T sum = 0.0f; 
 	int lu = 1;
 	do{
+		sum = 0.0f;
 		//for loop for execution and the copy of pointers
 		for(int i = 0; i < lu; ++i)
 		{
@@ -116,16 +117,16 @@ static int loopV2(GRID_T *vec, int length){
 	//printf("Total amout of updates: %d\n", lu);
 	//printf("Amout of time V2 uses: %f\n", diff_sec);
 
-
+	printf("SUM: %f\n", sum);
 	/* Scale lups to LOOP_TIME */
-	return (lu/diff_sec);
+	return ( (length*lu) / diff_sec );
 }
 
 
 /* Method for initialization of a grid */
 static void init(GRID_T *vec, int length){
 	for(int i = 0; i < length; ++i){
-		vec[i] = 1.1f;
+		vec[i] = 1.0f;
 	}
 	return;
 }
