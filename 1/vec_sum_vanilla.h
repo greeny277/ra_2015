@@ -8,4 +8,4 @@
  * @return No return value
  * */
 
-GRID_T vec_sum(GRID_T*,int);
+double vec_sum(GRID_T*,int);

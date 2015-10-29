@@ -80,7 +80,7 @@ static int loopV2(GRID_T *vec, int length){
 		return -1;
 	}
 	
-	GRID_T sum = 0.0f; 
+	double sum = 0.0f; 
 	int lu = 1;
 	do{
 		sum = 0.0f;
