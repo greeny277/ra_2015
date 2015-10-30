@@ -3,7 +3,7 @@ import Turtle
 import qualified Control.Foldl as Fold
 
 main :: IO ()
-main = fold computation Fold.nub >>= mapM_ (print . format (""%s%""))
+main = fold computation Fold.nub >>= mapM_ (echo . format (""%s%""))
 
 computation :: Shell Text
 computation = do
