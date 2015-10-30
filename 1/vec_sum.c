@@ -6,15 +6,20 @@
  *
  * GCC Version: 4.9.2
  */
+
+#define _GNU_SOURCE
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
 #include <limits.h>
 #include <time.h>
+#include <sched.h>
 
 #include "vec_sum.h"
 #include "vec_sum_vanilla.h"
+
 
 /* Method declarations */
 static void init(GRID_T *, int);
@@ -28,6 +33,19 @@ int main(int argc, char** argv){
 		fprintf(stderr, "Too less arguments: vec_sum sizeOfVector\n");
 		exit(EXIT_FAILURE);
 	}
+
+	cpu_set_t set;
+
+	CPU_ZERO(&set);
+	/* Add first available CPU to set */
+	CPU_SET(0, &set);
+
+	/* Perform all actions of this process on one CPU */
+	if(sched_setaffinity(0, sizeof(cpu_set_t), &set)){
+		perror("sched_setaffinity");
+		exit(EXIT_FAILURE);
+	}
+
 
 	int size;
 	size  = help_strtol(argv[1]);
@@ -45,13 +63,14 @@ int main(int argc, char** argv){
 	errno = posix_memalign((void **) &vec, 64, 1024*size);
 	if(errno){
 		perror("posix_memalign");
+		exit(EXIT_FAILURE);
 	}
 
 	//Calculate the number of elements = size
 	int length = (1024 * size) / sizeof(GRID_T);
 	
 
-	/* Initialize the vector with 1.0 */
+	/* Initialize the vector with a constant value */
 	init(vec, length);
 
 	int mups = loopV2(vec, length);
