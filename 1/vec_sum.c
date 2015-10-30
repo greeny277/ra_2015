@@ -106,7 +106,7 @@ static int loopV2(GRID_T *vec, int length){
 		//for loop for execution and the copy of pointers
 		for(int i = 0; i < lu; ++i)
 		{
-			sum = vec_sum(vec, length);
+			sum = vec_sum2(vec, length);
 			if(sum == -1){
 				return -1;
 			}
@@ -130,11 +130,6 @@ static int loopV2(GRID_T *vec, int length){
 	 * The number of reapts we execute in every iteration is 1 bigger than the sum of the iter before	
 	 */
 	--lu;
-
-	/*Testing*/
-	//printf("------------------\n");
-	//printf("Total amout of updates: %d\n", lu);
-	//printf("Amout of time V2 uses: %f\n", diff_sec);
 
 	printf("SUM: %f\n", sum);
 	/* Scale lups to LOOP_TIME */

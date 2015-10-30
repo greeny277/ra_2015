@@ -9,3 +9,8 @@
  * */
 
 double vec_sum(GRID_T*,int);
+double vec_sum2(GRID_T*,int);
+double vec_sum3(GRID_T*,int);
+double vec_sum4(GRID_T*,int);
+double vec_sum8(GRID_T*,int);
+double vec_sumOpt(GRID_T*,int,int);
