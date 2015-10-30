@@ -4,5 +4,6 @@ vec_sum
 *.ppm
 *.i
 *.s
+*.hi
 !gcc*/*.s
 !icc*/*.s
