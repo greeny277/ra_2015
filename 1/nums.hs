@@ -12,4 +12,4 @@ computation = do
         return $ head $ cut (char '.') point
 
 getMeasurePoint :: Int -> Double
-getMeasurePoint n = exp (logBase (exp 1) (128*1024)/68)^n
+getMeasurePoint n = exp (logBase (exp 1) (128*1024)/68)^n + 0.5
