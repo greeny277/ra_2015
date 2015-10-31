@@ -78,8 +78,7 @@ int main(int argc, char** argv){
 		exit(EXIT_FAILURE);
 	}
 
-	printf("------------------\n");
-	printf("MUPS: %d\n", mups);
+	printf("%d\n", mups);
 
 	free(vec);
 	return 0;
@@ -131,7 +130,7 @@ static int loopV2(GRID_T *vec, int length){
 	 */
 	--lu;
 
-	printf("SUM: %f\n", sum);
+	//printf("SUM: %f\n", sum);
 	/* Scale lups to LOOP_TIME */
 	return ( (length*lu) / diff_sec );
 }
