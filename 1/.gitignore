@@ -5,6 +5,5 @@ vec_sum
 *.i
 *.s
 *.hi
-*.dat
 !gcc*/*.s
 !icc*/*.s
