@@ -1,4 +1,8 @@
 # Execute via % gnuplot loops.plt -
+
+# If you want to save graph in a png uncomment next two lines
+# set term png
+# set output "loops.png"
 set xlabel "FILESIZE KiB"
 set ylabel "MUPS"
 set logscale x
