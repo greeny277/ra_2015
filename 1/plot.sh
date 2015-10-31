@@ -6,7 +6,7 @@ datfile_noext="loops"
 
 # create new loops.dat
 printf "# This file is called %s.dat\n" "$datfile_noext" > $datfile
-printf "# Filesize  MUPS\n" >> $datfile
+printf "# Filesize  MUPSV0 MUPSV2 MUPSV3 MUPSV4 MUPSV8\n" >> $datfile
 while read line
 do
 	# get mups

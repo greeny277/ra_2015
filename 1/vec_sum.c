@@ -25,7 +25,13 @@
 static void init(GRID_T *, int);
 static long help_strtol(char *);
 static double getTime(struct timespec *);
-static int loopV2(GRID_T *, int);
+static int loopV2(GRID_T *, int, int);
+static double callback(int, GRID_T *, int);
+
+/* Variables */
+static int loopVariants[] = {-1, -2, -3, -4, -8};
+
+#define NLoopV 5
 
 int main(int argc, char** argv){
 
@@ -70,15 +76,19 @@ int main(int argc, char** argv){
 	int length = (1024 * size) / sizeof(GRID_T);
 	
 
+	for(int i = 0; i < NLoopV; i++){
 	/* Initialize the vector with a constant value */
-	init(vec, length);
+		init(vec, length);
 
-	int mups = loopV2(vec, length);
-	if(mups == -1){
-		exit(EXIT_FAILURE);
+		int mups = loopV2(vec, length, loopVariants[i]);
+		
+		if(mups == -1){
+			exit(EXIT_FAILURE);
+		}
+
+		printf("%d ", mups);
 	}
-
-	printf("%d\n", mups);
+	printf("\n");
 
 	free(vec);
 	return 0;
@@ -88,7 +98,7 @@ int main(int argc, char** argv){
  * @brief Updated loop version with twice as many lu for each 
  * while-loop iteration
  */
-static int loopV2(GRID_T *vec, int length){
+static int loopV2(GRID_T *vec, int length, int variant){
 	struct timespec start;
 	struct timespec end;
 	double endTime;
@@ -105,7 +115,7 @@ static int loopV2(GRID_T *vec, int length){
 		//for loop for execution and the copy of pointers
 		for(int i = 0; i < lu; ++i)
 		{
-			sum = vec_sum2(vec, length);
+			sum = callback(variant, vec, length);
 			if(sum == -1){
 				return -1;
 			}
@@ -173,4 +183,41 @@ static double getTime(struct timespec *tp){
 		return -1;
 	}
 	return (double)tp->tv_sec + (double)tp->tv_nsec / 1000000000.0;
+}
+
+/*
+ * @brief  Calls a certian loop method which possibly
+ * optimizes the loopig procedure. Which method is chosen
+ * depends on the variant variable.
+ *
+ * @param variant  determines which loop optimization
+ * is chosen. A non-zero number calls a compiler
+ * supported variant with pragma unroll(variant).
+ * Negative numbers choose a method which manually
+ * unrolls a loop without any compiler based opt-ins.
+ * -1   No manualy unrolling
+ * -2   manualy unrolling 2 values per loop step
+ * -3   manualy unrolling 3 values per loop step
+ * -4   manualy unrolling 4 values per loop step
+ * -8   manualy unrolling 8 values per loop step
+ *
+ */
+static double callback(int variant, GRID_T *vec, int length){
+	double ret;
+	switch(variant){
+		case -1:
+			ret = vec_sum(vec, length);
+		case -2:
+			ret = vec_sum2(vec, length);
+		case -3:
+			ret = vec_sum3(vec, length);
+		case -4:
+			ret = vec_sum4(vec, length);
+		case -8:
+			ret = vec_sum8(vec, length);
+		default:
+			ret = vec_sumOpt(vec, length, variant);
+	}
+
+	return ret;
 }
