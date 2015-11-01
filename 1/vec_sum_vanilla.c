@@ -8,6 +8,8 @@
 double vec_sum(GRID_T *vect, int length){
 	
 	double sum = 0;
+	#pragma nounroll
+	#pragma novector
 	for(int i = 0; i < length; ++i){
 		sum += vect[i];
 	}
@@ -20,6 +22,7 @@ double vec_sum2(GRID_T *vect, int length){
 	double sum0 = 0;
 	double sum1 = 0;
 	#pragma nounroll
+	#pragma novector
 	for(int i = 0; i < length; i += 2){
 		sum0 += vect[i];
 		sum1 += vect[i+1];
@@ -37,6 +40,7 @@ double vec_sum3(GRID_T *vect, int length){
 	double sum1 = 0;
 	double sum2 = 0;
 	#pragma nounroll
+	#pragma novector
 	for(int i = 0; i < length; i += 3){
 		sum0 += vect[i+0];
 		sum1 += vect[i+1];
@@ -59,6 +63,7 @@ double vec_sum4(GRID_T *vect, int length){
 	double sum2 = 0;
 	double sum3 = 0;
 	#pragma nounroll
+	#pragma novector
 	for(int i = 0; i < length; i += 4){
 		sum0 += vect[i+0];
 		sum1 += vect[i+1];
@@ -67,7 +72,7 @@ double vec_sum4(GRID_T *vect, int length){
 	}
 	int scrap = length % 4;
 	for (int j = 0; j < scrap; ++j){
-		sum0 += vect[length-j];		
+		sum0 += vect[length-j];
 	}	
 
 	return (sum0 + sum1 + sum2 + sum3);
@@ -85,6 +90,7 @@ double vec_sum8(GRID_T *vect, int length){
 	double sum6 = 0;
 	double sum7 = 0;
 	#pragma nounroll
+	#pragma novector
 	for(int i = 0; i < length; i += 4){
 		sum0 += vect[i+0];
 		sum1 += vect[i+1];
@@ -97,7 +103,7 @@ double vec_sum8(GRID_T *vect, int length){
 	}
 	int scrap = length % 8;
 	for (int j = 0; j < scrap; ++j){
-		sum0 += vect[length-j];		
+		sum0 += vect[length-j];
 	}	
 
 	return (sum0 + sum1 + sum2 + sum3 + sum4 + sum5 + sum6 + sum7);
