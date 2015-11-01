@@ -104,11 +104,53 @@ double vec_sum8(GRID_T *vect, int length){
 }
 
 //Optimierung automatisiert durch den Compiler
-double vec_sumOpt(GRID_T *vect, int length, int rolling){
+double vec_sumOpt0(GRID_T *vect, int length){
+	double sum = 0;
+	#pragma unroll(0)
+	for(int i = 0; i < length; ++i){
+		sum += vect[i];
+	}
+
+	return sum;
+}
+
+double vec_sumOpt2(GRID_T *vect, int length){
 	
 	double sum = 0;
-//TODO: Schau ob man in nem Pragma überhaupt ne Variable aufrufen kann oder ob wir anstelle von Rolling jeweils 0,2,3,4,8 schreiben müssen.
-	#pragma unroll(rolling)
+	#pragma unroll(2)
+	for(int i = 0; i < length; ++i){
+		sum += vect[i];
+	}
+
+	return sum;
+}
+
+double vec_sumOpt3(GRID_T *vect, int length){
+	
+	double sum = 0;
+	#pragma unroll(3)
+	for(int i = 0; i < length; ++i){
+		sum += vect[i];
+	}
+
+	return sum;
+}
+
+double vec_sumOpt4(GRID_T *vect, int length){
+	
+	double sum = 0;
+	#pragma unroll(4)
+	for(int i = 0; i < length; ++i){
+		sum += vect[i];
+	}
+
+	return sum;
+}
+
+double vec_sumOpt8(GRID_T *vect, int length){
+	
+	double sum = 0;
+	#pragma unroll(8)
 	for(int i = 0; i < length; ++i){
 		sum += vect[i];
 	}

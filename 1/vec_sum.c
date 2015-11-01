@@ -29,7 +29,10 @@ static int loopV2(GRID_T *, int, int);
 static double callback(int, GRID_T *, int);
 
 /* Variables */
-static int loopVariants[] = {-1, -2, -3, -4, -8};
+/* params for manual opt loops */
+//static int loopVariants[] = {-1, -2, -3, -4, -8};
+/* params for automatic opt loops */
+static int loopVariants[] = {1, 2, 3, 4, 8};
 
 #define NLoopV 5
 
@@ -77,7 +80,7 @@ int main(int argc, char** argv){
 	
 
 	for(int i = 0; i < NLoopV; i++){
-	/* Initialize the vector with a constant value */
+		/* Initialize the vector with a constant value */
 		init(vec, length);
 
 		int mups = loopV2(vec, length, loopVariants[i]);
@@ -117,6 +120,7 @@ static int loopV2(GRID_T *vec, int length, int variant){
 		{
 			sum = callback(variant, vec, length);
 			if(sum == -1){
+				fprintf(stderr, "Loop variant doesnt exist. Please check loopVariants values.\n");
 				return -1;
 			}
 		}
@@ -203,8 +207,18 @@ static double getTime(struct timespec *tp){
  *
  */
 static double callback(int variant, GRID_T *vec, int length){
-	double ret;
+	double ret = 0;
 	switch(variant){
+		case 1:
+			ret = vec_sumOpt0(vec, length);
+		case 2:
+			ret = vec_sumOpt2(vec, length);
+		case 3:
+			ret = vec_sumOpt3(vec, length);
+		case 4:
+			ret = vec_sumOpt4(vec, length);
+		case 8:
+			ret = vec_sumOpt8(vec, length);
 		case -1:
 			ret = vec_sum(vec, length);
 		case -2:
@@ -215,9 +229,6 @@ static double callback(int variant, GRID_T *vec, int length){
 			ret = vec_sum4(vec, length);
 		case -8:
 			ret = vec_sum8(vec, length);
-		default:
-			ret = vec_sumOpt(vec, length, variant);
 	}
-
 	return ret;
 }
