@@ -2,18 +2,18 @@
 % -------- Umlaute korrekt ----------------
 \usepackage[latin1, utf8]{inputenc}
 \usepackage[ngerman]{babel}
+\usepackage{graphicx}
 %-------------------------------------------
 
 % Einrueckung unterbinden nach Absatz
 \setlength{\parindent}{0pt}
 
 \DeclareMathSizes{10}{10}{10}{10}
-\title{RA -- R\"U Blatt 0}
+\title{RA -- R\"U Blatt 1}
 \author{Christian Bay, Tobias Miksch}
 \date{\today}
 \begin{document}
 \maketitle
-\section*{Aufgabe 2}
 
 \textbf{ICC Version:}
 \begin{enumerate}
@@ -22,84 +22,32 @@
 	\item intel64/13.1up03
 \end{enumerate}
 
-\textbf{GCC Version: 4.9.2}
 \vspace*{6pt}
 
-\textbf{Aufrufparameter:} ./Jacobi 6000 500
+\section*{Aufgabe 3}
+\subsection*{b)}
+
 \begin{center}
-	\begin{tabular}{| c || c | c | c |}
-		LUPS & O0 & O2 & O3 \\
-		\hline \hline
-		gcc  & 21-26  & 103-105  & 180-190 \\
-		\hline
-		icc  & 22-27  & 125-132  & 119-133 \\
-		\hline
-	\end{tabular}
+	\begin{figure}[h]
+	\includegraphics[scale=0.6]{pics/a3b.png}
+	\caption{Plot of manual loop unrolling}
+	\end{figure}
 \end{center}
 
-\subsection*{GCC}
-\begin{enumerate}
-	\item{ \textbf{gcc -- O0}:
-			\begin{itemize}
-				\item Labels verteilt $\rightarrow$ viele Sprungoperationen
-				\item Kleiner Init Teil: Parameter auf Stack in Register kopiert
-				\item Ergebnisse aller arithmetischen Operationen werden zwischengespeichert
-			\end{itemize}
-		}
-	\item{ \textbf{gcc -- O2}:
-			\begin{itemize}
-				\item Um $\approx 10\%$ k\"urzer als O0 Variante
-				\item Gr\"osserer Init Part: Register werden in Abh"angigkeit
-					von anderen Registerinhalten gesetzt $\rightarrow$ schnellerer Arrayzugriff
-				\item Ergebnisse der arithmetischen Operationen werden so wenig
-					zwischengespeichert wie m\"oglich\\
-					$\rightarrow$ Wiederverwenden von Zwischenergebnissen\\
-					$\rightarrow$ Vector Operationen aus Intel Erweiterung
-				\item Labels sind dem Programmverlauf angeordnet:\\
-					innere Schleifenvariable erh"ohen $\rightarrow$ innerer Schleifen-Body $\rightarrow$
-					\"aussere Schleifenvariable erh\"ohen\\
-					$\longrightarrow$ Weniger Spr\"unge
-			\end{itemize}
-		}
-	\item{ \textbf{gcc -- O3}:
-			\begin{itemize}
-				\item Assemblercode ist um das f\"unfache L"anger im Vergleich
-					zu O0 und O2.
-				\item \# Labels: 86
-				\item In einem Zyklus werden viel mehr Werte aus Grid geladen\\
-					$\rightarrow$ Kein doppeltes Laden von Werten\\
-					$\rightarrow$ \textbf{Loop-Unrolling}
-			\end{itemize}
-		}
-\end{enumerate}
-\subsection*{ICC}
-Besonderheit: Bei \textit{jump} Befehlen, steht als Kommentar die Wahrscheinlichkeit,
-des Sprungs.
-\begin{enumerate}
-	\item{ \textbf{icc - O0}:
-			\begin{itemize}
-				\item Normaler Assembler Code. Zwischenergebnisse werden in Registern
-					gespeichert. Keine gr\"osseren Optimierungen.
-			\end{itemize}
-		}
-	\item{ \textbf{icc - O2}:
-			\begin{itemize}
-				\item Statt kleiner arithmetischer Befehle, vermehrt Vector-Operationen.
-				\item Zugriff auf Grid Entries \"uber Indirektionen die kompakt
-					in Registern gespeichert werden.
-			\end{itemize}
-		}
-	\item{ \textbf{icc - O3}:
-			\begin{itemize}
-				\item \# Labels: 77
-				\item F\"ur jede Operation ein Label
-				\item $\approx$ 50 Zeilen mehr Assemblercode
-				\item Assembler gibt an welche Parameter in welche Register
-					geschrieben wurden
-				\item Viel weniger kompliziert als in \textbf{gcc O3} Variante
-				\item Durchgehend Vector Operationen
-				\item \textbf{Loop-Unrolling}
-			\end{itemize}
-		}
-\end{enumerate}
+\subsection*{c)}
+TODO
+
+\section*{Aufgabe 4}
+\subsection*{b)}
+
+\begin{center}
+	\begin{figure}[h]
+	\includegraphics[scale=0.6]{pics/a4b.png}
+	\caption{Plot of compiler based loop unrolling}
+	\end{figure}
+\end{center}
+
+\subsection*{c)}
+TODO
+
 \end{document}
