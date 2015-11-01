@@ -35,7 +35,13 @@
 \end{center}
 
 \subsection*{c)}
-TODO
+\begin{itemize}
+	\item Geschwindigkeit steigt um $1.5$-fache pro Loop Unrolling ($8$-fache Loop-Unrolling \
+		$\rightarrow$ $\approx4$-fache Geschwindigkeit)
+	\item Sättigung tritt bereits bei Vektorgr\"osse von $10$ KiB auf. Danach aber kein
+		Geschwindigkeitsverlust
+	\item \textbf{Ursache:} Taktdauer von ADDSS?
+\end{itemize}
 
 \section*{Aufgabe 4}
 \subsection*{b)}
@@ -48,6 +54,14 @@ TODO
 \end{center}
 
 \subsection*{c)}
-TODO
+\begin{itemize}
+	\item Geschwindigkeit steigt um $0.2$-fache pro Loop Unrolling ($8$-fache Loop-Unrolling \
+		$\rightarrow$ $\approx 1.2$-fache Geschwindigkeit)
+	\item Maximale Geschwindkeit tritt bei Vektorgr\"osse von $\approx 50$ KiB auf.
+		\begin{enumerate}
+			\item Geschwindigkeitsverlust ab $50$ KiB\\ \textbf{Ursache:} Cache Größe
+			\item Geschwindigkeitsverlust ab $10.000$ KiB\\ \textbf{Ursache:} Page Gr\"osse?
+		\end{enumerate}
+\end{itemize}
 
 \end{document}
