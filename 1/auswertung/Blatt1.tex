@@ -54,13 +54,31 @@
 \end{center}
 
 \subsection*{c)}
+Cache Daten von Lima:\\
+\begin{center}
+	\begin{tabular}{| c || c |}
+		\hline
+		Cache-Typ             & Gr\"osse \\
+		\hline
+		\hline
+		L1d cache             &    32K\\
+		\hline
+		L1i cache             &    32K\\
+		\hline
+		L2 cache              &    256K\\
+		\hline
+		L3 cache              &    12288K\\
+		\hline
+	\end{tabular}
+\end{center}
+
 \begin{itemize}
 	\item Geschwindigkeit steigt um $0.2$-fache pro Loop Unrolling ($8$-fache Loop-Unrolling \
 		$\rightarrow$ $\approx 1.2$-fache Geschwindigkeit)
 	\item Maximale Geschwindkeit tritt bei Vektorgr\"osse von $\approx 50$ KiB auf.
 		\begin{enumerate}
-			\item Geschwindigkeitsverlust ab $50$ KiB\\ \textbf{Ursache:} Cache Größe
-			\item Geschwindigkeitsverlust ab $10.000$ KiB\\ \textbf{Ursache:} Page Gr\"osse?
+			\item Geschwindigkeitsverlust ab $50$ KiB\\ \textbf{Ursache:} Cache L1D voll
+			\item Geschwindigkeitsverlust ab $10.000$ KiB\\ \textbf{Ursache:} Cache L3 voll
 		\end{enumerate}
 \end{itemize}
 
