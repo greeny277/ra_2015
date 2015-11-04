@@ -25,14 +25,14 @@
 static void init(GRID_T *, int);
 static long help_strtol(char *);
 static double getTime(struct timespec *);
-static int loopV2(GRID_T *, int, int);
+static double loopV2(GRID_T *, int, int);
 static double callback(int, GRID_T *, int);
 
 /* Variables */
 /* params for manual opt loops */
-//static int loopVariants[] = {-1, -2, -3, -4, -8};
+static int loopVariants[] = {-1, -2, -3, -4, -8};
 /* params for automatic opt loops */
-static int loopVariants[] = {1, 2, 3, 4, 8};
+//static int loopVariants[] = {1, 2, 3, 4, 8};
 
 #define NLoopV 5
 
@@ -83,7 +83,7 @@ int main(int argc, char** argv){
 		/* Initialize the vector with a constant value */
 		init(vec, length);
 
-		int mups = loopV2(vec, length, loopVariants[i]);
+		int mups = ((loopV2(vec, length, loopVariants[i]))/(10^6));
 		
 		if(mups == -1){
 			exit(EXIT_FAILURE);
@@ -101,7 +101,7 @@ int main(int argc, char** argv){
  * @brief Updated loop version with twice as many lu for each 
  * while-loop iteration
  */
-static int loopV2(GRID_T *vec, int length, int variant){
+static double loopV2(GRID_T *vec, int length, int variant){
 	struct timespec start;
 	struct timespec end;
 	double endTime;
@@ -134,6 +134,9 @@ static int loopV2(GRID_T *vec, int length, int variant){
 		}
 
 		diff_sec = endTime - startTime;
+		//printf("Seconds: %f\n", diff_sec);
+		//printf("Size: %d\n", length);
+		//printf("LU: %d\n", lu);
 	} while(diff_sec < LOOP_TIME);
 
 	/*
@@ -142,11 +145,11 @@ static int loopV2(GRID_T *vec, int length, int variant){
 	 *	3:	7->1+2+4 iter	and lu = 8
 	 * The number of reapts we execute in every iteration is 1 bigger than the sum of the iter before	
 	 */
-	--lu;
+	lu = lu/2;
 
 	//printf("SUM: %f\n", sum);
 	/* Scale lups to LOOP_TIME */
-	return ( (length*lu) / diff_sec );
+	return ( (double)(length*lu) / (double)diff_sec );
 }
 
 
