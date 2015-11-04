@@ -77,13 +77,13 @@ int main(int argc, char** argv){
 
 	//Calculate the number of elements = size
 	int length = (1024 * size) / sizeof(GRID_T);
-	
+
 
 	for(int i = 0; i < NLoopV; i++){
 		/* Initialize the vector with a constant value */
 		init(vec, length);
 
-		int mups = ((loopV2(vec, length, loopVariants[i]))/(10^6));
+		int mups = loopV2(vec, length, loopVariants[i]);
 		
 		if(mups == -1){
 			exit(EXIT_FAILURE);
@@ -134,22 +134,22 @@ static double loopV2(GRID_T *vec, int length, int variant){
 		}
 
 		diff_sec = endTime - startTime;
-		//printf("Seconds: %f\n", diff_sec);
-		//printf("Size: %d\n", length);
-		//printf("LU: %d\n", lu);
 	} while(diff_sec < LOOP_TIME);
 
 	/*
-	 *	1:	1->1 iteration	and lu = 2
-	 *	2:	3->1+2 iter	and lu = 4
-	 *	3:	7->1+2+4 iter	and lu = 8
-	 * The number of reapts we execute in every iteration is 1 bigger than the sum of the iter before	
+	 * We need to divide in half the lups number, because
+	 * it was duplicated before the condition was checked.
 	 */
 	lu = lu/2;
 
+	double tmp = (double)length * (double)lu;
+	tmp = tmp/diff_sec;
+	tmp = tmp/(1000000);
+
+
 	//printf("SUM: %f\n", sum);
 	/* Scale lups to LOOP_TIME */
-	return ( (double)(length*lu) / (double)diff_sec );
+	return tmp;
 }
 
 
