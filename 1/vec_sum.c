@@ -154,7 +154,7 @@ static double loopV2(GRID_T *vec, int nmemb, int variant){
 
 	/* Multiply lu with nmemb of vector */
 	double tmp = (double)nmemb * (double)lu;
-	/* DEBUG
+	/* DEBUG BEGIN
 	fprintf(stderr, "LUPS after multiplication: %f\n", tmp);
 	   DEBUG END */
 
@@ -165,6 +165,10 @@ static double loopV2(GRID_T *vec, int nmemb, int variant){
 
 	/* Divide by 10^6 to get MEGA updates per seconds */
 	tmp = tmp/(1000000);
+
+	/* DEBUG
+	fprintf(stderr, "TMP after scale to mega: %f\n", tmp);
+	   DEBUG END */
 
 	return tmp;
 }
@@ -231,24 +235,34 @@ static double callback(int variant, GRID_T *vec, int nmemb){
 	switch(variant){
 		case 1:
 			ret = vec_sumOpt0(vec, nmemb);
+			return ret;
 		case 2:
 			ret = vec_sumOpt2(vec, nmemb);
+			return ret;
 		case 3:
 			ret = vec_sumOpt3(vec, nmemb);
+			return ret;
 		case 4:
 			ret = vec_sumOpt4(vec, nmemb);
+			return ret;
 		case 8:
 			ret = vec_sumOpt8(vec, nmemb);
+			return ret;
 		case -1:
 			ret = vec_sum(vec, nmemb);
+			return ret;
 		case -2:
 			ret = vec_sum2(vec, nmemb);
+			return ret;
 		case -3:
 			ret = vec_sum3(vec, nmemb);
+			return ret;
 		case -4:
 			ret = vec_sum4(vec, nmemb);
+			return ret;
 		case -8:
 			ret = vec_sum8(vec, nmemb);
+			return ret;
 	}
-	return ret;
+	return -1;
 }
