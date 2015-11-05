@@ -78,6 +78,10 @@ int main(int argc, char** argv){
 	//Calculate the number of elements = size
 	int nmemb = (1024 * size) / sizeof(GRID_T);
 
+	/* DEBUG BEGIN
+	fprintf(stderr, "Members of vector: %d\n", nmemb);
+	   DEBUG END */
+
 
 	for(int i = 0; i < NLoopV; i++){
 		/* Initialize the vector with a constant value */
@@ -134,16 +138,27 @@ static double loopV2(GRID_T *vec, int nmemb, int variant){
 		}
 
 		diff_sec = endTime - startTime;
+		/* DEBUG BEGIN
+		fprintf(stderr, "Seconds passed until now: %f\n", diff_sec);
+		   DEBUG END */
 	} while(diff_sec < LOOP_TIME);
 
+	/* DEBUG BEGIN
+	fprintf(stderr, "LU after loop: %d\n", lu);
+	   DEBUG END */
+
 	/*
-	 * We need to divide in half the lups number, because
-	 * it was duplicated before the condition was checked.
+	 * Decrementation seems right as suggested by QUED
 	 */
-	lu = lu/2;
+	lu--;
 
 	/* Multiply lu with nmemb of vector */
 	double tmp = (double)nmemb * (double)lu;
+	/* DEBUG
+	fprintf(stderr, "LUPS after multiplication: %f\n", tmp);
+	   DEBUG END */
+
+
 
 	/* Scale to 1 second */
 	tmp = tmp/diff_sec;
