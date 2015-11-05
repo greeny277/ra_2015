@@ -1,6 +1,6 @@
 CC     = gcc
 #CC     = icc
-CFLAGS = -std=c99 -Wall -D_XOPEN_SOURCE=700 -masm=intel -save-temps
+CFLAGS = -std=c99 -Wall -D_XOPEN_SOURCE=700 -masm=intel -save-temps -Wno-unknown-pragmas
 #OPT    = -O3 -xhost
 LDFLAGS= -lrt
 RM     = rm -f
