@@ -30,9 +30,9 @@ static double callback(int, GRID_T *, int);
 
 /* Variables */
 /* params for manual opt loops */
-static int loopVariants[] = {-1, -2, -3, -4, -8};
+//static int loopVariants[] = {-1, -2, -3, -4, -8};
 /* params for automatic opt loops */
-//static int loopVariants[] = {1, 2, 3, 4, 8};
+static int loopVariants[] = {1, 2, 3, 4, 8};
 
 #define NLoopV 5
 
@@ -61,7 +61,7 @@ int main(int argc, char** argv){
 
 	if(size <= 0){
 		fprintf(stderr, "Usage: vec_sum sizeOfVector\n");
-		fprintf(stderr, "Size must be greater than 0\n");
+		fprintf(stderr, "Size must be greater than 0 KiB\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -76,14 +76,14 @@ int main(int argc, char** argv){
 	}
 
 	//Calculate the number of elements = size
-	int length = (1024 * size) / sizeof(GRID_T);
+	int nmemb = (1024 * size) / sizeof(GRID_T);
 
 
 	for(int i = 0; i < NLoopV; i++){
 		/* Initialize the vector with a constant value */
-		init(vec, length);
+		init(vec, nmemb);
 
-		int mups = loopV2(vec, length, loopVariants[i]);
+		int mups = loopV2(vec, nmemb, loopVariants[i]);
 		
 		if(mups == -1){
 			exit(EXIT_FAILURE);
@@ -98,10 +98,10 @@ int main(int argc, char** argv){
 }
 
 /*
- * @brief Updated loop version with twice as many lu for each 
+ * @brief Updated loop version with twice as many lu for each
  * while-loop iteration
  */
-static double loopV2(GRID_T *vec, int length, int variant){
+static double loopV2(GRID_T *vec, int nmemb, int variant){
 	struct timespec start;
 	struct timespec end;
 	double endTime;
@@ -111,14 +111,14 @@ static double loopV2(GRID_T *vec, int length, int variant){
 		return -1;
 	}
 	
-	double sum = 0.0f; 
+	double sum = 0.0f;
 	int lu = 1;
 	do{
 		sum = 0.0f;
 		//for loop for execution and the copy of pointers
 		for(int i = 0; i < lu; ++i)
 		{
-			sum = callback(variant, vec, length);
+			sum = callback(variant, vec, nmemb);
 			if(sum == -1){
 				fprintf(stderr, "Loop variant doesnt exist. Please check loopVariants values.\n");
 				return -1;
@@ -142,20 +142,22 @@ static double loopV2(GRID_T *vec, int length, int variant){
 	 */
 	lu = lu/2;
 
-	double tmp = (double)length * (double)lu;
+	/* Multiply lu with nmemb of vector */
+	double tmp = (double)nmemb * (double)lu;
+
+	/* Scale to 1 second */
 	tmp = tmp/diff_sec;
+
+	/* Divide by 10^6 to get MEGA updates per seconds */
 	tmp = tmp/(1000000);
 
-
-	//printf("SUM: %f\n", sum);
-	/* Scale lups to LOOP_TIME */
 	return tmp;
 }
 
 
 /* Method for initialization of a grid */
-static void init(GRID_T *vec, int length){
-	for(int i = 0; i < length; ++i){
+static void init(GRID_T *vec, int nmemb){
+	for(int i = 0; i < nmemb; ++i){
 		vec[i] = 1.0f;
 	}
 	return;
@@ -209,29 +211,29 @@ static double getTime(struct timespec *tp){
  * -8   manualy unrolling 8 values per loop step
  *
  */
-static double callback(int variant, GRID_T *vec, int length){
+static double callback(int variant, GRID_T *vec, int nmemb){
 	double ret = 0;
 	switch(variant){
 		case 1:
-			ret = vec_sumOpt0(vec, length);
+			ret = vec_sumOpt0(vec, nmemb);
 		case 2:
-			ret = vec_sumOpt2(vec, length);
+			ret = vec_sumOpt2(vec, nmemb);
 		case 3:
-			ret = vec_sumOpt3(vec, length);
+			ret = vec_sumOpt3(vec, nmemb);
 		case 4:
-			ret = vec_sumOpt4(vec, length);
+			ret = vec_sumOpt4(vec, nmemb);
 		case 8:
-			ret = vec_sumOpt8(vec, length);
+			ret = vec_sumOpt8(vec, nmemb);
 		case -1:
-			ret = vec_sum(vec, length);
+			ret = vec_sum(vec, nmemb);
 		case -2:
-			ret = vec_sum2(vec, length);
+			ret = vec_sum2(vec, nmemb);
 		case -3:
-			ret = vec_sum3(vec, length);
+			ret = vec_sum3(vec, nmemb);
 		case -4:
-			ret = vec_sum4(vec, length);
+			ret = vec_sum4(vec, nmemb);
 		case -8:
-			ret = vec_sum8(vec, length);
+			ret = vec_sum8(vec, nmemb);
 	}
 	return ret;
 }
