@@ -91,7 +91,7 @@ double vec_sum8(GRID_T *vect, int length){
 	double sum7 = 0;
 	#pragma nounroll
 	#pragma novector
-	for(int i = 0; i < length; i += 4){
+	for(int i = 0; i < length; i += 8){
 		sum0 += vect[i+0];
 		sum1 += vect[i+1];
 		sum2 += vect[i+2];
