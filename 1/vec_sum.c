@@ -30,9 +30,9 @@ static double callback(int, GRID_T *, int);
 
 /* Variables */
 /* params for manual opt loops */
-//static int loopVariants[] = {-1, -2, -3, -4, -8};
+static int loopVariants[] = {-1, -2, -3, -4, -8};
 /* params for automatic opt loops */
-static int loopVariants[] = {1, 2, 3, 4, 8};
+//static int loopVariants[] = {1, 2, 3, 4, 8};
 
 #define NLoopV 5
 
@@ -235,34 +235,34 @@ static double callback(int variant, GRID_T *vec, int nmemb){
 	switch(variant){
 		case 1:
 			ret = vec_sumOpt0(vec, nmemb);
-			return ret;
+			break;
 		case 2:
 			ret = vec_sumOpt2(vec, nmemb);
-			return ret;
+			break;
 		case 3:
 			ret = vec_sumOpt3(vec, nmemb);
-			return ret;
+			break;
 		case 4:
 			ret = vec_sumOpt4(vec, nmemb);
-			return ret;
+			break;
 		case 8:
 			ret = vec_sumOpt8(vec, nmemb);
-			return ret;
+			break;
 		case -1:
 			ret = vec_sum(vec, nmemb);
-			return ret;
+			break;
 		case -2:
 			ret = vec_sum2(vec, nmemb);
-			return ret;
+			break;
 		case -3:
 			ret = vec_sum3(vec, nmemb);
-			return ret;
+			break;
 		case -4:
 			ret = vec_sum4(vec, nmemb);
-			return ret;
+			break;
 		case -8:
 			ret = vec_sum8(vec, nmemb);
-			return ret;
+			break;
 	}
-	return -1;
+	return ret;
 }
