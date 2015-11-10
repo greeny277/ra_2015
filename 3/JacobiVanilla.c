@@ -25,7 +25,8 @@ void jacobiVanilla(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 }
 
 static void jacobi_sse(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
-	/* Contains all 4 upper values */
+	/* Each vector contains one value of the four Jacobi iteration step
+	 * Either each upper, below, left or right value. */
 	__m128 up_row, below_row, right_row, left_row;
 
 	__m128 factor = _mm_set_ps(0.25f, 0.25f, 0.25f, 0.25f);
