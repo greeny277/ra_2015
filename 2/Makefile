@@ -16,6 +16,10 @@ all: Jacobi
 clean:
 	$(RM) Jacobi *.o *.s *.i
 
+distclean:
+	$(RM) Jacobi *.o *.s *.i *.jpg *.ppm
+
+
 Jacobi: $(OBJS)
 	$(CC) -o $@ $(OBJS) $(LDFLAGS)
 
