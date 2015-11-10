@@ -22,7 +22,6 @@ static void init(GRID_T *, int, int);
 static long help_strtol(char *);
 static int pretty_PPM_Print(GRID_T *, int, int, char *);
 static double getTime(struct timespec *);
-static int loop(GRID_T *, GRID_T *, int , int);
 static int loopV2(GRID_T *, GRID_T *, int , int);
 static void gridEntryMap(FILE *, GRID_T);
 //static void copy_grid(GRID_T *, GRID_T *, int , int);
@@ -31,7 +30,7 @@ static void gridEntryMap(FILE *, GRID_T);
 int main(int argc, char** argv){
 
 	if(argc < 3){
-		fprintf(stderr, "Too less arguments: Jacobi width height [outfile1] [outfile2]\n");
+		fprintf(stderr, "Too less arguments: Jacobi width height [outfile1]\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -40,7 +39,7 @@ int main(int argc, char** argv){
 	height = help_strtol(argv[2]);
 
 	if(width <= 0 || height <= 0){
-		fprintf(stderr, "Usage: Jacobi width height [outfile1] [outfile2]\n");
+		fprintf(stderr, "Usage: Jacobi width height [outfile1]\n");
 		fprintf(stderr, "width and height must be greater than 0\n");
 		exit(EXIT_FAILURE);
 	}
@@ -64,38 +63,16 @@ int main(int argc, char** argv){
 	init(oldGrid, width, height);
 	init(newGrid, width, height);
 
-	int lups = loop(oldGrid, newGrid, width, height);
-	if(lups == -1){
-		exit(EXIT_FAILURE);
-	}
-
-	printf("------------------\n");
-	printf("LUPS of version 1: %d\n", lups);
-
-	if(argc >= 4){
-		pretty_PPM_Print(newGrid, width, height, argv[3]);
-	} else {
-		pretty_PPM_Print(newGrid, width, height, "out1");
-	}
-	
-
-	/* Initialize grids left and upper border with 1.0
-	 * and the rest with 0.0 */
-	init(oldGrid, width, height);
-	init(newGrid, width, height);
-
 	int lupsV2 = loopV2(oldGrid, newGrid, width, height);
 	if(lupsV2 == -1){
 		exit(EXIT_FAILURE);
 	}
+	printf("%d\n", lupsV2);
 
-	printf("------------------\n");
-	printf("LUPS of version 2: %d\n", lupsV2);
-
-	if(argc > 4){
-		pretty_PPM_Print(newGrid, width, height, argv[4]);
+	if(argc > 3){
+		pretty_PPM_Print(newGrid, width, height, argv[3]);
 	} else {
-		pretty_PPM_Print(newGrid, width, height, "out2");	
+		pretty_PPM_Print(newGrid, width, height, "out1");
 	}
 
 	free(oldGrid);
@@ -104,51 +81,7 @@ int main(int argc, char** argv){
 }
 
 /*
- * @brief Call jacobiVanilla() in a loop until LOOP_TIME has
- * passed
- *
- * @param oldGrid holds same information as newGrid but
- *                kept unchanged
- * @param newGrid saves results of next iteration.
- *
- * @return Lattice (Grid) update per seconds (LUPS) or
- *        -1 on error case.
- */
-static int loop(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
-	struct timespec start;
-	struct timespec end;
-	double endTime;
-	double diff_sec = 0;
-	double startTime = getTime(&start);
-	if(startTime == -1){
-		return -1;
-	}
-
-	GRID_T *tmp;
-	int lups = 0;
-	while(diff_sec < LOOP_TIME){
-		jacobiVanilla(oldGrid, newGrid, width, height);
-
-		tmp = oldGrid;
-		oldGrid = newGrid;
-		newGrid = tmp;
-
-		endTime = getTime(&end);
-		if(endTime == -1){
-			return -1;
-		}
-
-		diff_sec = endTime - startTime;
-
-		lups++;
-	}
-
-	/* Scale lups to LOOP_TIME */
-	return (lups/diff_sec);
-}
-
-/*
- * @brief Updated loop version with twice as many lu for each 
+ * @brief Updated loop version with twice as many lu for each
  * while-loop iteration
  */
 static int loopV2(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
