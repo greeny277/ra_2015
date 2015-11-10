@@ -65,5 +65,32 @@ static void jacobi_normal(GRID_T *oldGrid, GRID_T *newGrid, int width, int heigh
 }
 
 static void jacobi_avx(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
+	/* Each vector contains one value of the four Jacobi iteration step
+	 * Either each upper, below, left or right value. */
+	__m256d up_row, below_row, right_row, left_row;
+
+	__m256d factor = _mm256_set_pd(0.25, 0.25, 0.25, 0.25);
+
+	for(int i = 1; i < height-1; i++){
+		for(int j = 1; j < width-4; j += 4){
+			up_row = _mm256_set_pd(oldGrid[(i-1)*width + j], oldGrid[(i-1)*width + (j+1)], oldGrid[(i-1)*width + (j+2)], oldGrid[(i-1)*width + (j+3)]);
+			below_row = _mm256_set_pd(oldGrid[(i+1)*width + j], oldGrid[(i+1)*width + (j+1)], oldGrid[(i+1)*width + (j+2)], oldGrid[(i+1)*width + (j+3)]);
+
+			right_row = _mm256_set_pd(oldGrid[i*width + (j+1)], oldGrid[i*width + (j+2)], oldGrid[i*width + (j+3)], oldGrid[i*width + (j+4)]);
+			left_row = _mm256_set_pd(oldGrid[i*width + (j-1)], oldGrid[i*width + j], oldGrid[i*width + (j+1)], oldGrid[i*width + (j+2)]);
+
+			/* Sum up n-th element of each vector */
+			__m256d dest;
+			dest =  _mm256_add_pd(up_row, below_row);
+			dest =  _mm256_add_pd(dest, right_row);
+			dest =  _mm256_add_pd(dest, left_row);
+
+			/* Multiplicat with 0.25 */
+			dest = _mm256_mul_pd(dest, factor);
+
+			// Use unaligned store method. Normal one produces segmentation fault
+			_mm256_storeu_pd(&(newGrid[i*width + j]), dest);
+		}
+	}
 	return;
 }
