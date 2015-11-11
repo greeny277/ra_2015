@@ -7,4 +7,6 @@
  *
  * @return No return value
  * */
-void jacobiVanilla(GRID_T *, GRID_T *, int, int);
+void jacobi_avx(GRID_T *, GRID_T *, int, int);
+void jacobi_normal(GRID_T *, GRID_T *, int, int);
+void jacobi_sse(GRID_T *, GRID_T *, int, int);

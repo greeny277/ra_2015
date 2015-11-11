@@ -22,7 +22,7 @@ static void init(GRID_T *, int, int);
 static long help_strtol(char *);
 static int pretty_PPM_Print(GRID_T *, int, int, char *);
 static double getTime(struct timespec *);
-static int loopV2(GRID_T *, GRID_T *, int , int);
+static int loopV2(GRID_T *, GRID_T *, int , int, int);
 static void gridEntryMap(FILE *, GRID_T);
 //static void copy_grid(GRID_T *, GRID_T *, int , int);
 //static void prettyPrint(GRID_T *, int, int);
@@ -63,11 +63,14 @@ int main(int argc, char** argv){
 	init(oldGrid, width, height);
 	init(newGrid, width, height);
 
-	int lupsV2 = loopV2(oldGrid, newGrid, width, height);
-	if(lupsV2 == -1){
-		exit(EXIT_FAILURE);
+	for(int i = 0; i < 3; i++){
+		int lupsV2 = loopV2(oldGrid, newGrid, width, height, i);
+		if(lupsV2 == -1){
+			exit(EXIT_FAILURE);
+		}
+		printf("%d ", lupsV2);
 	}
-	printf("%d\n", lupsV2);
+	printf("\n");
 
 	if(argc > 3){
 		pretty_PPM_Print(newGrid, width, height, argv[3]);
@@ -84,7 +87,7 @@ int main(int argc, char** argv){
  * @brief Updated loop version with twice as many lu for each
  * while-loop iteration
  */
-static int loopV2(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
+static int loopV2(GRID_T *oldGrid, GRID_T *newGrid, int width, int height, int variant){
 	struct timespec start;
 	struct timespec end;
 	double endTime;
@@ -99,8 +102,17 @@ static int loopV2(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 		//for loop for execution and the copy of pointers
 		for(int i = 0; i < lu; ++i)
 		{
-			jacobiVanilla(oldGrid, newGrid, width, height);
-
+			switch(variant){
+				case 0:
+					jacobi_normal(oldGrid, newGrid, width, height);
+					break;
+				case 1:
+					jacobi_sse(oldGrid, newGrid, width, height);
+					break;
+				case 2:
+					jacobi_sse(oldGrid, newGrid, width, height);
+					break;
+			}
 			tmp = oldGrid;
 			oldGrid = newGrid;
 			newGrid = tmp;
@@ -247,25 +259,25 @@ static double getTime(struct timespec *tp){
 /*
  * @brief Copy entries from newGrid into oldGrid.
  *
-static void copy_grid(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
-	for(int i = 0; i< height; i++){
-		for(int j = 0; j < width; j++){
-			oldGrid[width*i + j] = newGrid[width*i + j];
-		}
-	}
-}*/
+ static void copy_grid(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
+ for(int i = 0; i< height; i++){
+ for(int j = 0; j < width; j++){
+ oldGrid[width*i + j] = newGrid[width*i + j];
+ }
+ }
+ }*/
 
 /* Print Grid in asci art for debugging
-static void prettyPrint(GRID_T *grid, int width, int height){
-	printf("------BEGIN GRID--------\n");
-	for(int i = 0; i < height; i++){
-		for(int j = 0; j < width; j++){
-			printf("%f  ", grid[width*i + j]);
-		}
-		printf("\n");
-	}
-	printf("------END GRID----------\n");
-	printf("\n");
-	return;
-}
-*/
+   static void prettyPrint(GRID_T *grid, int width, int height){
+   printf("------BEGIN GRID--------\n");
+   for(int i = 0; i < height; i++){
+   for(int j = 0; j < width; j++){
+   printf("%f  ", grid[width*i + j]);
+   }
+   printf("\n");
+   }
+   printf("------END GRID----------\n");
+   printf("\n");
+   return;
+   }
+   */

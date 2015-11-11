@@ -7,6 +7,12 @@
  * How many seconds after loop stops
  */
 #define LOOP_TIME 1
+
+/* Choose mode of vectorizing */
+#define NORMAL
+//#define AVX
+//#define SSE
+
 /*
  * Choose SP or DP
  */
