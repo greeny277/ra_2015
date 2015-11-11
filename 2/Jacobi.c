@@ -60,23 +60,25 @@ int main(int argc, char** argv){
 
 	/* Initialize grids left and upper border with 1.0
 	 * and the rest with 0.0 */
-	init(oldGrid, width, height);
-	init(newGrid, width, height);
 
 	for(int i = 0; i < 3; i++){
+		init(oldGrid, width, height);
+		init(newGrid, width, height);
 		int lupsV2 = loopV2(oldGrid, newGrid, width, height, i);
 		if(lupsV2 == -1){
 			exit(EXIT_FAILURE);
 		}
 		printf("%d ", lupsV2);
+		if(argc > 3 + i){
+			pretty_PPM_Print(newGrid, width, height, argv[3+i]);
+		} else {
+			char outfile[5];
+			snprintf(outfile, 5, "out%d", i);
+			pretty_PPM_Print(newGrid, width, height, outfile);
+		}
 	}
 	printf("\n");
 
-	if(argc > 3){
-		pretty_PPM_Print(newGrid, width, height, argv[3]);
-	} else {
-		pretty_PPM_Print(newGrid, width, height, "out1");
-	}
 
 	free(oldGrid);
 	free(newGrid);
