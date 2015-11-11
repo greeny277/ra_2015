@@ -14,6 +14,6 @@ do
 	length_quad=$(echo "sqrt($line*1024)" | bc -l)
 	length_quad_kiB=$(echo "$length_quad" | bc | sed 's/\..*//g')
 	echo "$length_quad_kiB"
-	mups=$(./Jacobi "$length_quad_kiB" "$length_quad_kiB")
-	printf "  %s         %s\n" "$line" "$mups" >> $datfile
+	iters=$(./Jacobi "$length_quad_kiB" "$length_quad_kiB")
+	printf "  %s         %s\n" "$line" "$iters" >> $datfile
 done < "${1:-/dev/stdin}"
