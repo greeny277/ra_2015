@@ -67,6 +67,7 @@ int main(int argc, char** argv){
 			exit(EXIT_FAILURE);
 		}
 		printf("%d ", lupsV2);
+		#ifdef OUTPUT
 		if(argc > 3 + i){
 			pretty_PPM_Print(newGrid, width, height, argv[3+i]);
 		} else {
@@ -74,6 +75,7 @@ int main(int argc, char** argv){
 			snprintf(outfile, 5, "out%d", i);
 			pretty_PPM_Print(newGrid, width, height, outfile);
 		}
+		#endif
 	}
 	printf("\n");
 

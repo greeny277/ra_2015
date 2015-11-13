@@ -13,3 +13,6 @@
  */
 //#define FLOAT
 #define DOUBLE
+
+/* De-/ Activate write of ppm files */
+#define OUTPUT
