@@ -1,0 +1,46 @@
+\documentclass{article}
+% -------- Umlaute korrekt ----------------
+\usepackage[latin1, utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+%-------------------------------------------
+
+% Einrueckung unterbinden nach Absatz
+\setlength{\parindent}{0pt}
+
+
+\DeclareMathSizes{10}{10}{10}{10}
+\title{RA -- R\"U Blatt 1}
+\author{Christian Bay (lu38wuqi), Tobias Miksch (up83yvev)}
+\date{\today}
+\begin{document}
+\maketitle
+
+\textbf{ICC Version:}
+\begin{enumerate}
+	\item intelmpi/4.1.3.048-intel
+	\item mkl/11.0up05
+	\item intel64/13.1up03
+\end{enumerate}
+
+\vspace*{6pt}
+
+\section*{Aufgabe 3}
+\subsection*{b)}
+
+\begin{center}
+	\begin{figure}[h]
+	\includegraphics[scale=0.75]{images/float.eps}
+		\caption{Plot of with float entries}
+	\end{figure}
+\end{center}
+
+\begin{center}
+	\begin{figure}[h]
+	\includegraphics[scale=0.75]{images/double.eps}
+		\caption{Plot of with double entries}
+	\end{figure}
+\end{center}
+
+\end{document}
