@@ -112,7 +112,7 @@ static int loopV2(GRID_T *oldGrid, GRID_T *newGrid, int width, int height, int v
 					jacobi_sse(oldGrid, newGrid, width, height);
 					break;
 				case 2:
-					jacobi_sse(oldGrid, newGrid, width, height);
+					jacobi_avx(oldGrid, newGrid, width, height);
 					break;
 			}
 			tmp = oldGrid;
