@@ -24,8 +24,6 @@ static int pretty_PPM_Print(GRID_T *, int, int, char *);
 static double getTime(struct timespec *);
 static int loopV2(GRID_T *, GRID_T *, int , int, int);
 static void gridEntryMap(FILE *, GRID_T);
-//static void copy_grid(GRID_T *, GRID_T *, int , int);
-//static void prettyPrint(GRID_T *, int, int);
 
 int main(int argc, char** argv){
 
@@ -257,29 +255,3 @@ static double getTime(struct timespec *tp){
 	}
 	return (double)tp->tv_sec + (double)tp->tv_nsec / 1000000000.0;
 }
-
-/*
- * @brief Copy entries from newGrid into oldGrid.
- *
- static void copy_grid(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
- for(int i = 0; i< height; i++){
- for(int j = 0; j < width; j++){
- oldGrid[width*i + j] = newGrid[width*i + j];
- }
- }
- }*/
-
-/* Print Grid in asci art for debugging
-   static void prettyPrint(GRID_T *grid, int width, int height){
-   printf("------BEGIN GRID--------\n");
-   for(int i = 0; i < height; i++){
-   for(int j = 0; j < width; j++){
-   printf("%f  ", grid[width*i + j]);
-   }
-   printf("\n");
-   }
-   printf("------END GRID----------\n");
-   printf("\n");
-   return;
-   }
-   */
