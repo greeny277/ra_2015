@@ -54,13 +54,13 @@ void jacobi_sse(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 	for(int i = 1; i < height-1; i++){
 		for(int j = 1; j < width-2; j += 2){
 			up_row = _mm_set_pd(oldGrid[(i-1)*width + j], oldGrid[(i-1)*width + (j+1)]);
-			below_row = _mm_set_pd(oldGrid[(i+1)*width + j], oldGrid[(i+1)*width + (j+1)],);
+			below_row = _mm_set_pd(oldGrid[(i+1)*width + j], oldGrid[(i+1)*width + (j+1)]);
 
 			right_row = _mm_set_pd(oldGrid[i*width + (j+1)], oldGrid[i*width + (j+2)]);
 			left_row = _mm_set_pd(oldGrid[i*width + (j-1)], oldGrid[i*width + j]);
 
 			/* Sum up n-th element of each vector */
-			__m128 dest;
+			__m128d dest;
 			dest =  _mm_add_pd(up_row, below_row);
 			dest =  _mm_add_pd(dest, right_row);
 			dest =  _mm_add_pd(dest, left_row);
@@ -158,9 +158,9 @@ void jacobi_avx(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 			// Use unaligned store method. Normal one produces segmentation fault
 			_mm256_storeu_pd(&(newGrid[i*width + j]), dest);
 		}
-	}
-	for(int j = width - remainder - 1; j < width -1; j++){
-		newGrid[i*width + j] = (oldGrid[i*width + (j-1)] + oldGrid[i*width + (j+1)] + oldGrid[(i-1)*width + j] + oldGrid[(i+1)*width + j]) * 0.25;
+		for(int j = width - remainder - 1; j < width -1; j++){
+			newGrid[i*width + j] = (oldGrid[i*width + (j-1)] + oldGrid[i*width + (j+1)] + oldGrid[(i-1)*width + j] + oldGrid[(i+1)*width + j]) * 0.25;
+		}
 	}
 	return;
 #endif
