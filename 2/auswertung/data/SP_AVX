@@ -6,13 +6,13 @@ Analysis Type - Throughput
 
 Throughput Analysis Report
 --------------------------
-Block Throughput: 51.50 Cycles       Throughput Bottleneck: FrontEnd
+Block Throughput: 41.71 Cycles       Throughput Bottleneck: FrontEnd
 
 Port Binding In Cycles Per Iteration:
 ---------------------------------------------------------------------------------------
 |  Port  |  0   -  DV  |  1   |  2   -  D   |  3   -  D   |  4   |  5   |  6   |  7   |
 ---------------------------------------------------------------------------------------
-| Cycles | 23.0   0.0  | 26.0 | 40.5   35.0 | 40.5   35.0 | 12.0 | 37.0 | 37.0 | 1.0  |
+| Cycles | 19.6   0.0  | 25.2 | 29.5   27.5 | 29.5   27.5 | 5.0  | 30.0 | 30.0 | 1.0  |
 ---------------------------------------------------------------------------------------
 
 N - port number or number of cycles resource conflict caused delay, DV - Divider pipe (on port 0)
@@ -27,60 +27,46 @@ F - Macro Fusion with the previous instruction occurred
 | Num Of |                    Ports pressure in cycles                     |    |
 |  Uops  |  0  - DV  |  1  |  2  -  D  |  3  -  D  |  4  |  5  |  6  |  7  |    |
 ---------------------------------------------------------------------------------
-|   1    |           |     | 1.0   1.0 |           |     |     |     |     |    | mov eax, dword ptr [rsp+0x34]
-|   2^   |           |     |           | 1.0   1.0 |     | 0.5 | 0.5 |     |    | cmp dword ptr [rsp-0x8], 0x9
-|   2^   |           |     | 1.0       |           | 1.0 |     |     |     |    | mov dword ptr [rsp+0x30], eax
-|   1    | 1.0       |     |           |           |     |     |     |     |    | jle 0x12d
-|   1    |           |     | 1.0   1.0 |           |     |     |     |     |    | mov rsi, qword ptr [rsp-0x40]
-|   1    |           |     |           | 1.0   1.0 |     |     |     |     |    | mov rax, qword ptr [rsp-0x38]
-|   1    |           |     | 1.0   1.0 |           |     |     |     |     |    | mov r15, qword ptr [rsp-0x30]
-|   1    |           |     |           |           |     | 1.0 |     |     |    | lea rcx, ptr [r10+rsi*1]
-|   1    |           |     |           | 1.0   1.0 |     |     |     |     |    | mov rsi, qword ptr [rsp+0x20]
-|   1    |           | 0.5 |           |           |     |     | 0.5 |     |    | add rax, r10
-|   1    |           |     |           |           |     | 1.0 |     |     |    | lea r15, ptr [r10+r15*1+0x4]
-|   1    |           | 0.5 |           |           |     | 0.5 |     |     |    | lea rdx, ptr [rsi+r10*1]
-|   0*   |           |     |           |           |     |     |     |     |    | xor esi, esi
-|   0*   |           |     |           |           |     |     |     |     |    | nop dword ptr [rax+rax*1], eax
-|   1    |           |     | 1.0   1.0 |           |     |     |     |     |    | vmovss xmm6, dword ptr [rdx+0x8]
-|   1    |           |     |           |           |     |     | 1.0 |     |    | add rcx, 0x20
-|   1    |           |     |           |           |     | 0.5 | 0.5 |     |    | add rdx, 0x20
-|   1    |           |     |           | 1.0   1.0 |     |     |     |     |    | vmovss xmm0, dword ptr [rcx-0xc]
-|   1    |           |     |           |           |     |     | 1.0 |     |    | add rax, 0x20
-|   2    |           |     | 1.0   1.0 |           |     | 1.0 |     |     |    | vinsertps xmm5, xmm6, dword ptr [rdx-0x1c], 0x10
-|   1    |           |     |           | 1.0   1.0 |     |     |     |     |    | vmovss xmm6, dword ptr [rdx-0x10]
-|   1    |           |     | 1.0   1.0 |           |     |     |     |     |    | vmovss xmm1, dword ptr [rcx-0x10]
-|   2    |           |     |           | 1.0   1.0 |     | 1.0 |     |     |    | vinsertps xmm2, xmm6, dword ptr [rdx-0x14], 0x10
-|   1    |           |     | 1.0   1.0 |           |     |     |     |     |    | vmovss xmm6, dword ptr [rdx-0x8]
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vmovss xmm6, dword ptr [rdx+0x8]
+|   1    |           |     |           |           |     | 0.8 | 0.2 |     |    | add rcx, 0x20
+|   1    |           |     |           |           |     | 0.2 | 0.8 |     |    | add rdx, 0x20
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vmovss xmm0, dword ptr [rcx-0xc]
+|   1    |           |     |           |           |     | 0.8 | 0.2 |     |    | add rax, 0x20
+|   2    |           |     | 0.5   0.5 | 0.5   0.5 |     | 1.0 |     |     |    | vinsertps xmm5, xmm6, dword ptr [rdx-0x1c], 0x10
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vmovss xmm6, dword ptr [rdx-0x10]
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vmovss xmm1, dword ptr [rcx-0x10]
+|   2    |           |     | 0.5   0.5 | 0.5   0.5 |     | 1.0 |     |     |    | vinsertps xmm2, xmm6, dword ptr [rdx-0x14], 0x10
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vmovss xmm6, dword ptr [rdx-0x8]
 |   1    |           |     |           |           |     | 1.0 |     |     |    | vmovlhps xmm2, xmm2, xmm5
-|   1    |           |     |           | 1.0   1.0 |     |     |     |     |    | vmovss xmm5, dword ptr [rcx-0x18]
-|   2    |           |     | 1.0   1.0 |           |     | 1.0 |     |     |    | vinsertps xmm3, xmm6, dword ptr [rdx-0xc], 0x10
-|   1    |           |     |           | 1.0   1.0 |     |     |     |     |    | vmovss xmm6, dword ptr [rdx]
-|   2    |           |     | 1.0   1.0 |           |     | 1.0 |     |     |    | vinsertps xmm5, xmm5, dword ptr [rcx-0x1c], 0x10
-|   2    |           |     |           | 1.0   1.0 |     | 1.0 |     |     |    | vinsertps xmm4, xmm6, dword ptr [rdx-0x4], 0x10
-|   1    |           |     | 1.0   1.0 |           |     |     |     |     |    | vmovss xmm6, dword ptr [rcx-0x4]
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vmovss xmm5, dword ptr [rcx-0x18]
+|   2    |           |     | 0.5   0.5 | 0.5   0.5 |     | 1.0 |     |     |    | vinsertps xmm3, xmm6, dword ptr [rdx-0xc], 0x10
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vmovss xmm6, dword ptr [rdx]
+|   2    |           |     | 0.5   0.5 | 0.5   0.5 |     | 1.0 |     |     |    | vinsertps xmm5, xmm5, dword ptr [rcx-0x1c], 0x10
+|   2    |           |     | 0.5   0.5 | 0.5   0.5 |     | 1.0 |     |     |    | vinsertps xmm4, xmm6, dword ptr [rdx-0x4], 0x10
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vmovss xmm6, dword ptr [rcx-0x4]
 |   1    |           |     |           |           |     | 1.0 |     |     |    | vmovlhps xmm4, xmm4, xmm3
 |   1    |           |     |           |           |     | 1.0 |     |     |    | vinsertf128 ymm3, ymm4, xmm2, 0x1
-|   2    |           |     |           | 1.0   1.0 |     | 1.0 |     |     |    | vinsertps xmm2, xmm1, dword ptr [rcx-0x14], 0x10
+|   2    |           |     | 0.5   0.5 | 0.5   0.5 |     | 1.0 |     |     |    | vinsertps xmm2, xmm1, dword ptr [rcx-0x14], 0x10
 |   1    |           |     |           |           |     | 1.0 |     |     |    | vunpcklps xmm1, xmm0, xmm1
 |   1    |           |     |           |           |     | 1.0 |     |     |    | vunpcklps xmm4, xmm6, xmm0
 |   1    |           |     |           |           |     | 1.0 |     |     |    | vmovlhps xmm2, xmm2, xmm5
 |   1    |           |     |           |           |     | 1.0 |     |     |    | vmovlhps xmm4, xmm4, xmm1
-|   1    |           |     | 1.0   1.0 |           |     |     |     |     |    | vmovss xmm5, dword ptr [rax-0x4]
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vmovss xmm5, dword ptr [rax-0x4]
 |   1    |           |     |           |           |     | 1.0 |     |     |    | vinsertf128 ymm1, ymm4, xmm2, 0x1
 |   1    |           | 1.0 |           |           |     |     |     |     |    | vaddps ymm1, ymm3, ymm1
-|   1    |           |     |           | 1.0   1.0 |     |     |     |     |    | vmovss xmm6, dword ptr [rax+0x4]
-|   1    |           |     | 1.0   1.0 |           |     |     |     |     |    | vmovss xmm3, dword ptr [rax-0x14]
-|   2    |           |     |           | 1.0   1.0 |     | 1.0 |     |     |    | vinsertps xmm9, xmm5, dword ptr [rax-0x8], 0x10
-|   1    |           |     | 1.0   1.0 |           |     |     |     |     |    | vmovss xmm4, dword ptr [rax-0xc]
-|   2    |           |     |           | 1.0   1.0 |     | 1.0 |     |     |    | vinsertps xmm5, xmm6, dword ptr [rax], 0x10
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vmovss xmm6, dword ptr [rax+0x4]
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vmovss xmm3, dword ptr [rax-0x14]
+|   2    |           |     | 0.5   0.5 | 0.5   0.5 |     | 1.0 |     |     |    | vinsertps xmm9, xmm5, dword ptr [rax-0x8], 0x10
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vmovss xmm4, dword ptr [rax-0xc]
+|   2    |           |     | 0.5   0.5 | 0.5   0.5 |     | 1.0 |     |     |    | vinsertps xmm5, xmm6, dword ptr [rax], 0x10
 |   1    |           |     |           |           |     | 1.0 |     |     |    | vmovlhps xmm5, xmm5, xmm9
-|   2    |           |     | 1.0   1.0 |           |     | 1.0 |     |     |    | vinsertps xmm3, xmm3, dword ptr [rax-0x18], 0x10
-|   2    |           |     |           | 1.0   1.0 |     | 1.0 |     |     |    | vinsertps xmm4, xmm4, dword ptr [rax-0x10], 0x10
+|   2    |           |     | 0.5   0.5 | 0.5   0.5 |     | 1.0 |     |     |    | vinsertps xmm3, xmm3, dword ptr [rax-0x18], 0x10
+|   2    |           |     | 0.5   0.5 | 0.5   0.5 |     | 1.0 |     |     |    | vinsertps xmm4, xmm4, dword ptr [rax-0x10], 0x10
 |   1    |           |     |           |           |     | 1.0 |     |     |    | vmovlhps xmm6, xmm4, xmm3
 |   1    |           |     |           |           |     | 1.0 |     |     |    | vinsertf128 ymm5, ymm5, xmm6, 0x1
 |   1    |           | 1.0 |           |           |     |     |     |     |    | vaddps ymm0, ymm1, ymm5
-|   1    |           |     | 1.0   1.0 |           |     |     |     |     |    | vmovss xmm1, dword ptr [rax-0x1c]
-|   2    |           |     |           | 1.0   1.0 |     | 1.0 |     |     |    | vinsertps xmm2, xmm1, dword ptr [rax-0x20], 0x10
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vmovss xmm1, dword ptr [rax-0x1c]
+|   2    |           |     | 0.5   0.5 | 0.5   0.5 |     | 1.0 |     |     |    | vinsertps xmm2, xmm1, dword ptr [rax-0x20], 0x10
 |   1    |           |     |           |           |     | 1.0 |     |     |    | vmovlhps xmm1, xmm9, xmm4
 |   1    |           |     |           |           |     | 1.0 |     |     |    | vmovlhps xmm2, xmm3, xmm2
 |   1    |           |     |           |           |     | 1.0 |     |     |    | vinsertf128 ymm2, ymm1, xmm2, 0x1
@@ -89,122 +75,105 @@ F - Macro Fusion with the previous instruction occurred
 |   2    |           |     | 0.5       | 0.5       | 1.0 |     |     |     |    | vmovups ymmword ptr [r15+rsi*1], ymm2
 |   1    |           |     |           |           |     |     | 1.0 |     |    | add rsi, 0x20
 |   1    |           |     |           |           |     |     | 1.0 |     |    | cmp rsi, rdi
-|   0F   |           |     |           |           |     |     |     |     |    | jnz 0xffffffffffffff0a
-|   2^   | 0.5       |     | 1.0   1.0 |           |     |     | 0.5 |     |    | cmp dword ptr [rsp-0x4], r14d
-|   0F   |           |     |           |           |     |     |     |     |    | jnl 0x1ad
+|   0F   |           |     |           |           |     |     |     |     |    | jnz 0xffffffffffffff00
+|   2^   |           |     | 0.5   0.5 | 0.5   0.5 |     |     | 1.0 |     |    | cmp dword ptr [rsp-0x4], r14d
+|   0F   |           |     |           |           |     |     |     |     |    | jnl 0x1a3
 |   1    |           | 1.0 |           |           |     |     |     |     |    | lea rcx, ptr [r12-0x4]
 |   1    |           | 1.0 |           |           |     |     |     |     |    | lea rax, ptr [r11+0x1c]
 |   1    |           | 1.0 |           |           |     |     |     |     |    | lea rdx, ptr [r12+0x1c]
-|   1    | 0.5       |     |           |           |     |     | 0.5 |     |    | cmp rcx, rax
+|   1    |           |     |           |           |     |     | 1.0 |     |    | cmp rcx, rax
 |   1    |           | 1.0 |           |           |     |     |     |     |    | lea rsi, ptr [r11-0x4]
-|   1    |           |     |           |           |     |     | 1.0 |     |    | setnb al
+|   1    | 1.0       |     |           |           |     |     |     |     |    | setnb al
 |   1    |           | 1.0 |           |           |     |     |     |     |    | lea r15, ptr [rbx-0x4]
-|   1    | 0.5       |     |           |           |     |     | 0.5 |     |    | cmp rdx, rsi
+|   1    |           |     |           |           |     |     | 1.0 |     |    | cmp rdx, rsi
 |   2    | 1.0       |     |           |           |     |     | 1.0 |     |    | setbe sil
-|   1    |           |     |           |           |     |     | 1.0 |     |    | or eax, esi
+|   1    | 0.8       |     |           |           |     |     | 0.2 |     |    | or eax, esi
 |   1    |           | 1.0 |           |           |     |     |     |     |    | lea rsi, ptr [rbx+0x1c]
-|   1    | 0.5       |     |           |           |     |     | 0.5 |     |    | cmp rcx, rsi
-|   1    | 0.5       |     |           |           |     |     | 0.5 |     |    | setnb sil
-|   1    | 0.5       |     |           |           |     |     | 0.5 |     |    | cmp rdx, r15
+|   1    | 0.4       |     |           |           |     |     | 0.6 |     |    | cmp rcx, rsi
+|   1    | 0.8       |     |           |           |     |     | 0.2 |     |    | setnb sil
+|   1    | 0.7       |     |           |           |     |     | 0.3 |     |    | cmp rdx, r15
 |   2    | 1.0       |     |           |           |     |     | 1.0 |     |    | setbe r15b
-|   1    |           | 1.0 |           |           |     |     |     |     |    | or esi, r15d
-|   1    | 1.0       |     |           |           |     |     |     |     |    | and eax, esi
-|   2^   |           | 1.0 |           | 1.0   1.0 |     |     |     |     |    | cmp dword ptr [rsp+0x1c], 0x7
+|   1    | 0.1       | 0.9 |           |           |     |     |     |     |    | or esi, r15d
+|   1    | 0.2       | 0.1 |           |           |     |     | 0.7 |     |    | and eax, esi
+|   2^   |           | 1.0 | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | cmp dword ptr [rsp+0x1c], 0x7
 |   2    | 1.0       |     |           |           |     |     | 1.0 |     |    | setnbe sil
-|   1    | 0.5       |     |           |           |     |     | 0.5 |     |    | and eax, esi
+|   1    |           | 1.0 |           |           |     |     |     |     |    | and eax, esi
 |   1    |           | 1.0 |           |           |     |     |     |     |    | lea rsi, ptr [r9+0x20]
-|   1    | 0.5       | 0.5 |           |           |     |     |     |     |    | cmp rcx, rsi
-|   1    |           |     |           |           |     |     | 1.0 |     |    | setnb sil
-|   1    | 1.0       |     |           |           |     |     |     |     |    | cmp rdx, r9
+|   1    | 0.7       |     |           |           |     |     | 0.3 |     |    | cmp rcx, rsi
+|   1    | 0.3       |     |           |           |     |     | 0.7 |     |    | setnb sil
+|   1    | 0.7       |     |           |           |     |     | 0.3 |     |    | cmp rdx, r9
 |   2    | 1.0       |     |           |           |     |     | 1.0 |     |    | setbe r15b
-|   1    |           | 1.0 |           |           |     |     |     |     |    | or esi, r15d
-|   1    |           |     |           |           |     |     | 1.0 |     |    | test al, sil
-|   0F   |           |     |           |           |     |     |     |     |    | jz 0x1aa
+|   1    | 0.2       | 0.8 |           |           |     |     |     |     |    | or esi, r15d
+|   1    | 0.1       |     |           |           |     |     | 0.9 |     |    | test al, sil
+|   0F   |           |     |           |           |     |     |     |     |    | jz 0x1a0
 |   1    |           | 1.0 |           |           |     |     |     |     |    | lea rax, ptr [r9+0x18]
-|   1    | 1.0       |     |           |           |     |     |     |     |    | cmp rcx, rax
+|   1    | 0.9       |     |           |           |     |     | 0.1 |     |    | cmp rcx, rax
 |   1    |           | 1.0 |           |           |     |     |     |     |    | lea rcx, ptr [r9-0x8]
-|   1    |           |     |           |           |     |     | 1.0 |     |    | setnb al
-|   1    | 1.0       |     |           |           |     |     |     |     |    | cmp rdx, rcx
+|   1    | 0.1       |     |           |           |     |     | 0.9 |     |    | setnb al
+|   1    | 0.7       | 0.2 |           |           |     |     | 0.1 |     |    | cmp rdx, rcx
 |   2    | 1.0       |     |           |           |     |     | 1.0 |     |    | setbe dl
-|   1    |           |     |           |           |     |     | 1.0 |     |    | or al, dl
-|   0F   |           |     |           |           |     |     |     |     |    | jz 0x18e
-|   1    |           |     | 1.0   1.0 |           |     |     |     |     |    | mov eax, dword ptr [rsp+0x18]
-|   1    | 1.0       |     |           |           |     |     |     |     |    | test eax, eax
-|   0F   |           |     |           |           |     |     |     |     |    | jz 0x82
+|   1    | 0.2       |     |           |           |     |     | 0.8 |     |    | or al, dl
+|   0F   |           |     |           |           |     |     |     |     |    | jz 0x184
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | mov eax, dword ptr [rsp+0x18]
+|   1    | 0.8       |     |           |           |     |     | 0.2 |     |    | test eax, eax
+|   0F   |           |     |           |           |     |     |     |     |    | jz 0x80
 |   0*   |           |     |           |           |     |     |     |     |    | xor eax, eax
 |   0*   |           |     |           |           |     |     |     |     |    | xor edx, edx
-|   1    |           |     |           | 1.0   1.0 |     |     |     |     |    | vmovups xmm1, xmmword ptr [r9+rax*1-0x8]
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vmovups xmm1, xmmword ptr [r9+rax*1-0x8]
 |   1    |           | 1.0 |           |           |     |     |     |     |    | add edx, 0x1
-|   1    |           |     | 1.0   1.0 |           |     |     |     |     |    | vmovups xmm0, xmmword ptr [r9+rax*1]
-|   2    |           | 1.0 |           | 1.0   1.0 |     |     |     |     |    | vinsertf128 ymm1, ymm1, xmmword ptr [r9+rax*1+0x8], 0x1
-|   2    |           | 1.0 | 1.0   1.0 |           |     |     |     |     |    | vinsertf128 ymm0, ymm0, xmmword ptr [r9+rax*1+0x10], 0x1
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vmovups xmm0, xmmword ptr [r9+rax*1]
+|   2    |           | 1.0 | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vinsertf128 ymm1, ymm1, xmmword ptr [r9+rax*1+0x8], 0x1
+|   2    |           | 1.0 | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vinsertf128 ymm0, ymm0, xmmword ptr [r9+rax*1+0x10], 0x1
 |   1    |           | 1.0 |           |           |     |     |     |     |    | vaddps ymm1, ymm1, ymm0
-|   1    |           |     |           | 1.0   1.0 |     |     |     |     |    | vmovups xmm0, xmmword ptr [rbx+rax*1-0x4]
-|   2    | 1.0       |     | 1.0   1.0 |           |     |     |     |     |    | vinsertf128 ymm0, ymm0, xmmword ptr [rbx+rax*1+0xc], 0x1
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vmovups xmm0, xmmword ptr [rbx+rax*1-0x4]
+|   2    | 0.4       |     | 0.5   0.5 | 0.5   0.5 |     | 0.6 |     |     |    | vinsertf128 ymm0, ymm0, xmmword ptr [rbx+rax*1+0xc], 0x1
 |   1    |           | 1.0 |           |           |     |     |     |     |    | vaddps ymm1, ymm1, ymm0
-|   1    |           |     |           | 1.0   1.0 |     |     |     |     |    | vmovups xmm0, xmmword ptr [r11+rax*1-0x4]
-|   2    | 1.0       |     | 1.0   1.0 |           |     |     |     |     |    | vinsertf128 ymm0, ymm0, xmmword ptr [r11+rax*1+0xc], 0x1
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vmovups xmm0, xmmword ptr [r11+rax*1-0x4]
+|   2    | 0.8       |     | 0.5   0.5 | 0.5   0.5 |     | 0.2 |     |     |    | vinsertf128 ymm0, ymm0, xmmword ptr [r11+rax*1+0xc], 0x1
 |   1    |           | 1.0 |           |           |     |     |     |     |    | vaddps ymm0, ymm1, ymm0
 |   1    | 1.0       |     |           |           |     |     |     |     |    | vmulps ymm0, ymm0, ymm8
-|   2    |           |     |           | 1.0       | 1.0 |     |     |     |    | vmovups xmmword ptr [r12+rax*1-0x4], xmm0
+|   2    |           |     | 0.5       | 0.5       | 1.0 |     |     |     |    | vmovups xmmword ptr [r12+rax*1-0x4], xmm0
 |   2    |           |     | 0.5       | 0.5       | 1.0 |     |     |     |    | vextractf128 xmmword ptr [r12+rax*1+0xc], ymm0, 0x1
 |   1    |           |     |           |           |     |     | 1.0 |     |    | add rax, 0x20
-|   2^   |           |     |           | 1.0   1.0 |     |     | 1.0 |     |    | cmp edx, dword ptr [rsp-0x20]
+|   2^   |           |     | 0.5   0.5 | 0.5   0.5 |     |     | 1.0 |     |    | cmp edx, dword ptr [rsp-0x20]
 |   0F   |           |     |           |           |     |     |     |     |    | jb 0xffffffffffffff9b
-|   1    |           |     | 1.0   1.0 |           |     |     |     |     |    | mov eax, dword ptr [rsp+0x1c]
-|   2^   |           |     |           | 1.0   1.0 |     |     | 1.0 |     |    | cmp dword ptr [rsp+0x18], eax
-|   0F   |           |     |           |           |     |     |     |     |    | jz 0xa7
-|   0*   |           |     |           |           |     |     |     |     |    | nop dword ptr [rax], eax
-|   1    |           |     | 1.0   1.0 |           |     |     |     |     |    | mov rsi, qword ptr [rsp+0x38]
-|   1    |           |     |           | 1.0   1.0 |     |     |     |     |    | mov rcx, qword ptr [rsp+0x20]
-|   1    |           |     | 1.0   1.0 |           |     |     |     |     |    | mov r15, qword ptr [rsp-0x50]
-|   1    |           |     |           | 1.0   1.0 |     |     |     |     |    | vmovss xmm1, dword ptr [rip+0x321]
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | mov eax, dword ptr [rsp+0x1c]
+|   2^   | 0.2       |     | 0.5   0.5 | 0.5   0.5 |     |     | 0.8 |     |    | cmp dword ptr [rsp+0x18], eax
+|   0F   |           |     |           |           |     |     |     |     |    | jz 0xa1
+|   0*   |           |     |           |           |     |     |     |     |    | nop dword ptr [rax+rax*1], eax
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | mov rsi, qword ptr [rsp+0x38]
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | mov rcx, qword ptr [rsp+0x20]
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | mov r15, qword ptr [rsp-0x50]
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vmovss xmm1, dword ptr [rip+0x309]
 |   0*   |           |     |           |           |     |     |     |     |    | mov rax, rsi
-|   2^   |           |     | 1.0   1.0 |           |     |     | 1.0 |     |    | add rax, qword ptr [rsp-0x58]
+|   2^   |           |     | 0.5   0.5 | 0.5   0.5 |     |     | 1.0 |     |    | add rax, qword ptr [rsp-0x58]
 |   0*   |           |     |           |           |     |     |     |     |    | mov rdx, r15
-|   1    |           |     |           |           |     |     | 1.0 |     |    | add rdx, rsi
+|   1    | 0.2       |     |           |           |     |     | 0.8 |     |    | add rdx, rsi
 |   1    |           |     |           |           |     | 1.0 |     |     |    | lea rax, ptr [rcx+rax*4]
-|   1    |           |     |           | 1.0   1.0 |     |     |     |     |    | mov rcx, qword ptr [rsp-0x28]
-|   2^   |           |     | 1.0       |           | 1.0 |     |     |     |    | mov qword ptr [rsp-0x10], rax
-|   1    |           |     | 1.0   1.0 |           |     |     |     |     |    | mov rax, qword ptr [rsp+0x28]
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | mov rcx, qword ptr [rsp-0x60]
+|   2^   |           |     | 0.5       | 0.5       | 1.0 |     |     |     |    | mov qword ptr [rsp-0x10], rax
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | mov rax, qword ptr [rsp+0x28]
 |   1    |           |     |           |           |     | 1.0 |     |     |    | lea rcx, ptr [rcx+rdx*4]
 |   0*   |           |     |           |           |     |     |     |     |    | mov rdx, r15
-|   2^   |           |     |           | 1.0   1.0 |     |     | 1.0 |     |    | sub rdx, qword ptr [rsp-0x68]
+|   2^   | 0.2       |     | 0.5   0.5 | 0.5   0.5 |     |     | 0.8 |     |    | sub rdx, qword ptr [rsp-0x68]
 |   0*   |           |     |           |           |     |     |     |     |    | mov r15, rax
-|   2^   |           |     | 1.0   1.0 |           |     |     | 1.0 |     |    | add r15, qword ptr [rsp-0x60]
+|   2^   |           |     | 0.5   0.5 | 0.5   0.5 |     |     | 1.0 |     |    | add r15, qword ptr [rsp-0x40]
 |   0*   |           |     |           |           |     |     |     |     |    | mov rsi, rdx
-|   1    |           |     |           |           |     |     | 1.0 |     |    | add r15, rdx
+|   1    |           | 0.2 |           |           |     |     | 0.8 |     |    | add r15, rdx
 |   1    |           |     |           |           |     |     | 1.0 |     |    | add rsi, rax
-|   1    |           |     |           | 1.0   1.0 |     |     |     |     |    | mov edx, dword ptr [rsp-0x44]
-|   2^   |           |     | 1.0   1.0 |           |     |     | 1.0 |     |    | sub r15, qword ptr [rsp+0x38]
-|   2^   |           |     |           | 1.0   1.0 |     | 0.5 | 0.5 |     |    | sub rsi, qword ptr [rsp+0x38]
-|   1    |           |     | 1.0   1.0 |           |     |     |     |     |    | mov rax, qword ptr [rsp-0x10]
-|   0*   |           |     |           |           |     |     |     |     |    | nop dword ptr [rax+rax*1], eax
-|   1    |           |     |           | 1.0   1.0 |     |     |     |     |    | vmovss xmm0, dword ptr [rax]
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | mov edx, dword ptr [rsp-0x44]
+|   2^   |           |     | 0.5   0.5 | 0.5   0.5 |     |     | 1.0 |     |    | sub r15, qword ptr [rsp+0x38]
+|   2^   |           |     | 0.5   0.5 | 0.5   0.5 |     |     | 1.0 |     |    | sub rsi, qword ptr [rsp+0x38]
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | mov rax, qword ptr [rsp-0x10]
+|   1    |           |     | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vmovss xmm0, dword ptr [rax]
 |   1    |           |     |           |           |     |     | 1.0 |     |    | add edx, 0x1
-|   1    |           | 0.5 |           |           |     | 0.5 |     |     |    | add rcx, 0x4
-|   2    |           | 1.0 | 1.0   1.0 |           |     |     |     |     |    | vaddss xmm0, xmm0, dword ptr [rax+r13*4]
-|   2    |           | 1.0 |           | 1.0   1.0 |     |     |     |     |    | vaddss xmm0, xmm0, dword ptr [rax+rsi*4]
-|   2    |           | 1.0 | 1.0   1.0 |           |     |     |     |     |    | vaddss xmm0, xmm0, dword ptr [rax+r15*4]
-|   1    |           |     |           |           |     | 0.5 | 0.5 |     |    | add rax, 0x4
+|   1    |           |     |           |           |     | 0.3 | 0.7 |     |    | add rcx, 0x4
+|   2    |           | 1.0 | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vaddss xmm0, xmm0, dword ptr [rax+r13*4]
+|   2    |           | 1.0 | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vaddss xmm0, xmm0, dword ptr [rax+rsi*4]
+|   2    |           | 1.0 | 0.5   0.5 | 0.5   0.5 |     |     |     |     |    | vaddss xmm0, xmm0, dword ptr [rax+r15*4]
+|   1    |           |     |           |           |     | 0.2 | 0.8 |     |    | add rax, 0x4
 |   1    | 1.0       |     |           |           |     |     |     |     |    | vmulss xmm0, xmm0, xmm1
 |   2^   |           |     |           |           | 1.0 |     |     | 1.0 |    | vmovss dword ptr [rcx-0x4], xmm0
 |   1    | 1.0       |     |           |           |     |     |     |     |    | cmp r14d, edx
 |   0F   |           |     |           |           |     |     |     |     |    | jnle 0xffffffffffffffd4
-|   1    |           |     |           | 1.0   1.0 |     |     |     |     |    | mov rax, qword ptr [rsp-0x18]
-|   1    |           |     |           |           |     | 0.5 | 0.5 |     |    | add r10, r8
-|   1    |           |     |           |           |     | 0.5 | 0.5 |     |    | add r9, r8
-|   4^   |           |     | 1.0   1.0 | 1.0       | 1.0 | 0.5 | 0.5 |     |    | add dword ptr [rsp+0x34], 0x1
-|   1    |           |     |           |           |     | 0.5 | 0.5 |     |    | add r12, r8
-|   1    |           |     |           |           |     | 0.5 | 0.5 |     |    | add rbx, r8
-|   4^   |           |     | 1.0       | 1.0   1.0 | 1.0 | 0.5 | 0.5 |     |    | add qword ptr [rsp+0x10], r8
-|   1    |           |     |           |           |     | 0.5 | 0.5 |     |    | add r11, r8
-|   4^   |           |     | 1.0   1.0 | 1.0       | 1.0 | 0.5 | 0.5 |     |    | add qword ptr [rsp+0x8], r8
-|   4^   | 0.5       |     | 1.0       | 1.0   1.0 | 1.0 | 0.5 |     |     |    | add qword ptr [rsp+0x28], rax
-|   4^   | 0.5       |     | 1.0   1.0 | 1.0       | 1.0 |     | 0.5 |     |    | add qword ptr [rsp+0x38], rax
-|   1    |           |     |           | 1.0   1.0 |     |     |     |     |    | mov eax, dword ptr [rsp+0x30]
-|   4^   |           |     | 1.5   1.0 | 0.5       | 1.0 | 0.5 | 0.5 |     |    | add qword ptr [rsp], r8
-|   2^   | 1.0       |     |           | 1.0   1.0 |     |     |     |     |    | cmp dword ptr [rsp-0x1c], eax
-|   0F   |           |     |           |           |     |     |     |     |    | jnle 0xfffffffffffffcd1
-|   0*   |           |     |           |           |     |     |     |     |    | vzeroupper 
-Total Num Of Uops: 217
+Total Num Of Uops: 170

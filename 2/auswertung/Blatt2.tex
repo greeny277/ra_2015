@@ -4,6 +4,8 @@
 \usepackage[ngerman]{babel}
 \usepackage{graphicx}
 \usepackage{pdfpages}
+\usepackage{amsmath}
+\usepackage{amssymb}
 %-------------------------------------------
 
 % Einrueckung unterbinden nach Absatz
@@ -24,19 +26,33 @@
 	\item intel64/13.1up03
 \end{enumerate}
 
+\textbf{Emmy Cluster}
+\begin{enumerate}
+	\item Taktfrequenz: 2.2 GHz
+\end{enumerate}
+
 \vspace*{6pt}
 
 \section*{Aufgabe 2}
 \begin{tabular}{ c | c | c |}
 Single Precision &	SSE			& AVX \\
 	\hline
-	\#Ups & 189 & 217\\
+	\#Ups & 159 & 170\\
+	\hline
+	Cycles & 40 & 42\\
+	\hline
+	Throughput & 0.25 & 0.23 \\
 	\hline
 \end{tabular}
 
+
+
 \vspace*{10pt}
-Erwartbare \textbf{Konsequenz}:\\
-$\rightarrow$ AVX Variante sollt fast doppelt so schnell laufen.
+Erwartete \textbf{Mup/s}:\\
+\begin{align*}
+	\text{MUPS}_{\text{SSE: }} (0.25*159) * (2.2 * 10^3) = 87450\\
+	\text{MUPS}_{\text{AVX: }} (0.23*170) * (2.2 * 10^3) = 86020
+\end{align*}
 \section*{Aufgabe 3}
 \subsection*{b)}
 
