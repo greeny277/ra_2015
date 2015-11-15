@@ -17,6 +17,7 @@ void jacobi_sse(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 	remainder = (width-2)%4;
 
 	for(int i = 1; i < height-1; i++){
+		IACA_START
 		for(int j = 1; j < width-4; j += 4){
 			up_row = _mm_set_ps(oldGrid[(i-1)*width + j], oldGrid[(i-1)*width + (j+1)], oldGrid[(i-1)*width + (j+2)], oldGrid[(i-1)*width + (j+3)]);
 			below_row = _mm_set_ps(oldGrid[(i+1)*width + j], oldGrid[(i+1)*width + (j+1)], oldGrid[(i+1)*width + (j+2)], oldGrid[(i+1)*width + (j+3)]);
@@ -41,6 +42,7 @@ void jacobi_sse(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 			newGrid[i*width + j] = (oldGrid[i*width + (j-1)] + oldGrid[i*width + (j+1)] + oldGrid[(i-1)*width + j] + oldGrid[(i+1)*width + j]) * 0.25;
 		}
 	}
+	IACA_END
 #endif
 #ifdef DOUBLE
 	remainder = (width-2)%2;
@@ -51,6 +53,7 @@ void jacobi_sse(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 	__m128d factor = _mm_set1_pd(0.25f);
 
 	for(int i = 1; i < height-1; i++){
+		IACA_START
 		for(int j = 1; j < width-2; j += 2){
 			up_row = _mm_set_pd(oldGrid[(i-1)*width + j], oldGrid[(i-1)*width + (j+1)]);
 			below_row = _mm_set_pd(oldGrid[(i+1)*width + j], oldGrid[(i+1)*width + (j+1)]);
@@ -75,16 +78,19 @@ void jacobi_sse(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 			newGrid[i*width + j] = (oldGrid[i*width + (j-1)] + oldGrid[i*width + (j+1)] + oldGrid[(i-1)*width + j] + oldGrid[(i+1)*width + j]) * 0.25;
 		}
 	}
+	IACA_END
 #endif
 	return;
 }
 
 void jacobi_normal(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 	for(int i = 1; i < height-1; i++){
+		IACA_START
 		for(int j = 1; j < width-1; j++){
 			newGrid[i*width + j] = (oldGrid[i*width + (j-1)] + oldGrid[i*width + (j+1)] + oldGrid[(i-1)*width + j] + oldGrid[(i+1)*width + j]) * 0.25;
 		}
 	}
+	IACA_END
 	return;
 }
 
@@ -99,6 +105,7 @@ void jacobi_avx(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 	__m256 factor = _mm256_set1_ps(0.25);
 
 	for(int i = 1; i < height-1; i++){
+		IACA_START
 		for(int j = 1; j < width-8; j += 8){
 			up_row = _mm256_set_ps(oldGrid[(i-1)*width + j], oldGrid[(i-1)*width + (j+1)], oldGrid[(i-1)*width + (j+2)], oldGrid[(i-1)*width + (j+3)],\
 					oldGrid[(i-1)*width + (j+4)], oldGrid[(i-1)*width + (j+5)], oldGrid[(i-1)*width + (j+6)], oldGrid[(i-1)*width + (j+7)]);
@@ -126,6 +133,7 @@ void jacobi_avx(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 			newGrid[i*width + j] = (oldGrid[i*width + (j-1)] + oldGrid[i*width + (j+1)] + oldGrid[(i-1)*width + j] + oldGrid[(i+1)*width + j]) * 0.25;
 		}
 	}
+	IACA_END
 	return;
 #endif
 #ifdef DOUBLE
@@ -138,6 +146,7 @@ void jacobi_avx(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 	__m256d factor = _mm256_set1_pd(0.25);
 
 	for(int i = 1; i < height-1; i++){
+		IACA_START
 		for(int j = 1; j < width-4; j += 4){
 			up_row = _mm256_set_pd(oldGrid[(i-1)*width + j], oldGrid[(i-1)*width + (j+1)], oldGrid[(i-1)*width + (j+2)], oldGrid[(i-1)*width + (j+3)]);
 			below_row = _mm256_set_pd(oldGrid[(i+1)*width + j], oldGrid[(i+1)*width + (j+1)], oldGrid[(i+1)*width + (j+2)], oldGrid[(i+1)*width + (j+3)]);
@@ -161,6 +170,7 @@ void jacobi_avx(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){
 			newGrid[i*width + j] = (oldGrid[i*width + (j-1)] + oldGrid[i*width + (j+1)] + oldGrid[(i-1)*width + j] + oldGrid[(i+1)*width + j]) * 0.25;
 		}
 	}
+	IACA_END
 	return;
 #endif
 }
