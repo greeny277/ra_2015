@@ -1,9 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
-#include <immintrin.h>
 
-#include "Jacobi.h"
+#include "JacobiVanilla.h"
 
 
 void jacobi_sse(GRID_T *oldGrid, GRID_T *newGrid, int width, int height){

@@ -14,7 +14,6 @@
 #include <time.h>
 
 #include "Jacobi.h"
-#include "JacobiVanilla.h"
 
 
 /* Method declarations */
