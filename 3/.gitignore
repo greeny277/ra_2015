@@ -1,0 +1,8 @@
+*.o
+cache_simulator
+.*.swp
+*.ppm
+*.i
+*.s
+!gcc*/*.s
+!icc*/*.s
