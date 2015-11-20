@@ -138,8 +138,16 @@ static int loopV2(GRID_T *oldGrid, GRID_T *newGrid, int width, int height, int v
 	 */
 	--lu;
 
+	double tmp_v = (double)(width*height) * (double)lu;
+	/* Scale to 1 second */
+	tmp_v = tmp_v/diff_sec;
+
+	/* Divide by 10^6 to get MEGA updates per seconds */
+	tmp_v = tmp_v/(1000000);
+
+
 	/* Scale lups to LOOP_TIME */
-	return (lu/diff_sec);
+	return tmp_v;
 }
 
 
