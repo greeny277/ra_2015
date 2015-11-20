@@ -5,7 +5,7 @@ set terminal postscript eps enhanced color font 'Helvetica,10'
 set output 'auswertung/images/float.eps'
 
 set xlabel "FILESIZE KiB"
-set ylabel "#JacobiIteration"
+set ylabel "MUPS"
 #set style line 2  lc rgb '#ff0000' lt 1 lw 1.5 #      .
 set logscale x
 plot "auswertung/data/float.dat" using 1:2 title 'Normal' with linespoints, \
