@@ -9,6 +9,7 @@ LDFLAGS= -lrt
 RM     = rm -f
 
 SOURCES = $(shell ls Jacobi.c JacobiVanilla.c \
+                     jacobi_sse.c , jacobi_avx.c \
                   2> /dev/null) 
 OBJS    = $(SOURCES:%.c=%.o)
 
@@ -31,3 +32,5 @@ Jacobi: $(OBJS)
 
 Jacobi.o:        Jacobi.c Jacobi.h JacobiVanilla.h Makefile
 JacobiVanilla.o: JacobiVanilla.c Jacobi.h JacobiVanilla.h Makefile
+jacobi_avx.o: jacobi_avx.c jacobi_avx.h Makefile Jacobi.h JacobiVanilla.h
+jacobi_sse.o: jacobi_sse.c jacobi_sse.h Makefile Jacobi.h JacobiVanilla.h

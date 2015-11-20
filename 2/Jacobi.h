@@ -1,20 +1,21 @@
 #ifndef _JACOBI_H
 #define _JACOBI_H
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <errno.h>
+#include <immintrin.h>
 
 /*
  * GRID_T is the datatype of the grid entries
  */
-#define GRID_T float
+#define GRID_T double
 
-/*
- * Flags which determines the intrinsic variants
- * to be used. Choose same type as picked for GRID_T.
- */
-#define FLOAT
-//#define DOUBLE
+#include "iacaMarks.h"
 
 #include "JacobiVanilla.h"
+#include "jacobi_sse.h"
+#include "jacobi_avx.h"
 
 /*
  * How many seconds loop should run until it stops
