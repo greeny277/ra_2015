@@ -5,14 +5,14 @@
 /*
  * GRID_T is the datatype of the grid entries
  */
-#define GRID_T double
+#define GRID_T float
 
 /*
  * Flags which determines the intrinsic variants
  * to be used. Choose same type as picked for GRID_T.
  */
-//#define FLOAT
-#define DOUBLE
+#define FLOAT
+//#define DOUBLE
 
 #include "JacobiVanilla.h"
 
